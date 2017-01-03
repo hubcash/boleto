@@ -1,2 +1,3 @@
-# gorhyme
-Cool rhyme generator using Go and Tweets
+# goboleto
+Gerador de boletos para diversos bancos usando Golang
+
