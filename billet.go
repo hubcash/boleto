@@ -1,30 +1,21 @@
-package boleto
+package goboleto
 
-import "time"
+import (
+	"encoding/base64"
+	"html/template"
+)
 
-type Document struct {
-	Id 		int
-	Number 		int
-	Date		time.Time
-	DateDue		time.Time
-	Value 		float64
-	ValueTax 	float64
-	FebrabanType	string
-	Instructions 	[6]string
-	Client		Client
-	Company		Company
-}
+/*
+Billet is defined as an interface,
+then Billet has forced to implement these functions:
 
-type Client struct {
-	Name 		string
-	Address 	string
-	Contact 	string
-}
+@Barcode Get the barcode, as string, because it may contain dots and spaces
+@BarcodeImage Return a image/base64, based in barcode
+@Layout the HTML template generate with all the data
 
-type Company struct {
-	Name 		string
-	LegalName 	string
-	Document 	string
-	Address 	string
-	Contact 	string
+ */
+type Billet interface {
+	Barcode(Document) string
+	BarcodeImage(Document) base64.Encoding
+	Layout(Document) template.HTML
 }
