@@ -2,7 +2,7 @@
 [![Coverage Status](https://img.shields.io/badge/coverage-20%25-brightgreen.svg)]()
 Gerador de boletos para diversos bancos usando Golang.
 
-[![golang.sh-600x600.jpg](https://s29.postimg.org/ilrrz6q1j/golang_sh_600x600.jpg)](https://postimg.org/image/vd5y5oztf/)
+[![golang.sh-600x600.jpg](https://s27.postimg.org/coqxnki9f/golang_sh_600x600.jpg)](https://postimg.org/image/yb5y4lgtr/)
 
 ## Features
 * Gera layout, linha digitavel e imagem do codigo;
