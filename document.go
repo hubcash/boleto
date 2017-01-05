@@ -3,8 +3,8 @@ package goboleto
 import "time"
 
 /*
-Defines a document type, can be also
-considered the billet data structure
+Defines a document type,
+holds the data of the billet itself
 
 @Id identifier of your program orders/payments
 
@@ -22,6 +22,5 @@ type Document struct {
 	ValueTax 	float64
 	FebrabanType	string
 	Instructions 	[6]string
-	Payer		*Payer
-	Company		*Company
+	Payer		Payer
 }
