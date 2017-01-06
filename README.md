@@ -9,6 +9,9 @@ Gerador de boletos para diversos bancos usando Golang.
 * Gera layout, linha digitavel e imagem do codigo;
 * Boletos simples e registrados;
 
+## Usage
+Trabalhando nisso ainda...
+
 ## TODO
 * Gerar imagens dos codigos de barras;
 * Gerar layout dos boletos;
