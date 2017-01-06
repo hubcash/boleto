@@ -3,20 +3,6 @@ package goboleto
 import "encoding/base64"
 
 /*
-Bank constants
-@ID FEBRABAN bank identifier
-@Aceite if the payer accept the billet
-@Currency the currency identifier
-@CurrencyName the currency name
- */
-var configBradesco = map[string]interface{}{
-	"ID": 237,
-	"Aceite": "N",
-	"Currency": 9,
-	"CurrencyName": "R$",
-}
-
-/*
 Bradesco
 Source: (https://banco.bradesco/assets/pessoajuridica/pdf/4008-524-0121-08-layout-cobranca-versao-portuguesSS28785.pdf)
  */
@@ -29,7 +15,14 @@ type Bradesco struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			Company
+	Company			*Company
+}
+
+var configBradesco = bankConfig{
+	Id: 237,
+	Aceite: "N",
+	Currency: 9,
+	CurrencyName: "R$",
 }
 
 func (b Bradesco) Barcode(d Document) string {

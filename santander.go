@@ -3,20 +3,6 @@ package goboleto
 import "encoding/base64"
 
 /*
-Bank constants
-@ID FEBRABAN bank identifier
-@Aceite if the payer accept the billet
-@Currency the currency identifier
-@CurrencyName the currency name
- */
-var configSantander = map[string]interface{}{
-	"ID": 033,
-	"Aceite": "N",
-	"Currency": 9,
-	"CurrencyName": "R$",
-}
-
-/*
 Santander
 Source: (https://www.santander.com.br/document/wps/sl-tabela-de-tarifas-cobranca.pdf)
  */
@@ -29,7 +15,14 @@ type Santander struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			Company
+	Company			*Company
+}
+
+var configSantander = bankConfig{
+	Id: 033,
+	Aceite: "N",
+	Currency: 9,
+	CurrencyName: "R$",
 }
 
 func (b Santander) Barcode(d Document) string {

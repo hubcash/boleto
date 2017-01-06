@@ -5,20 +5,6 @@ import (
 )
 
 /*
-Bank constants
-@ID FEBRABAN bank identifier
-@Aceite if the payer accept the billet
-@Currency the currency identifier
-@CurrencyName the currency name
- */
-var configBB = map[string]interface{}{
-	"ID": 001,
-	"Aceite": "N",
-	"Currency": 9,
-	"CurrencyName": "R$",
-}
-
-/*
 BB - Banco do Brasil
 Source: (http://www.bb.com.br/docs/pub/emp/mpe/espeboletobb.pdf)
  */
@@ -31,14 +17,21 @@ type BB struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			Company
+	Company			*Company
+}
+
+var configBB = bankConfig{
+	Id: 001,
+	Aceite: "N",
+	Currency: 9,
+	CurrencyName: "R$",
 }
 
 func (b BB) Barcode(d Document) string {
 	var barcode = Barcode{
 		Field1: Field1{
-			bank: configBB["ID"].(int),
-			currency: configBB["Currency"].(int),
+			bank: configBB.Id,
+			currency: configBB.Currency,
 			numbers: 4444,
 			dv: 8,
 		},

@@ -12,6 +12,11 @@ holds the data of the billet itself
 the default used is "DM" (Duplicata mercantil)
 Source: (http://www.bb.com.br/docs/pub/emp/empl/dwn/011DescrCampos.pdf)
 
+@Value valor do boleto
+@ValueTax taxa do boleto
+@ValueDiscount abatimento/desconto
+@ValueForfeit juros/multa
+
  */
 type Document struct {
 	Id 		int
@@ -20,7 +25,9 @@ type Document struct {
 	DateDue		time.Time
 	Value 		float64
 	ValueTax 	float64
+	ValueDiscount	float64
+	ValueForfeit	float64
 	FebrabanType	string
 	Instructions 	[6]string
-	Payer		Payer
+	Payer		*Payer
 }

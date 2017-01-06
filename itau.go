@@ -3,20 +3,6 @@ package goboleto
 import "encoding/base64"
 
 /*
-Bank constants
-@ID FEBRABAN bank identifier
-@Aceite if the payer accept the billet
-@Currency the currency identifier
-@CurrencyName the currency name
- */
-var configItau = map[string]interface{}{
-	"ID": 341,
-	"Aceite": "N",
-	"Currency": 9,
-	"CurrencyName": "R$",
-}
-
-/*
 Itau
 Source: (http://download.itau.com.br/bankline/cobranca_cnab240.pdf)
  */
@@ -29,7 +15,14 @@ type Itau struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			Company
+	Company			*Company
+}
+
+var configItau = bankConfig{
+	Id: 341,
+	Aceite: "N",
+	Currency: 9,
+	CurrencyName: "R$",
 }
 
 func (b Itau) Barcode(d Document) string {

@@ -3,20 +3,6 @@ package goboleto
 import "encoding/base64"
 
 /*
-Bank constants
-@ID FEBRABAN bank identifier
-@Aceite if the payer accept the billet
-@Currency the currency identifier
-@CurrencyName the currency name
- */
-var configCaixa = map[string]interface{}{
-	"ID": 104,
-	"Aceite": "N",
-	"Currency": 9,
-	"CurrencyName": "R$",
-}
-
-/*
 CEF - Caixa econômica federal
 Source: (http://www.caixa.gov.br/Downloads/cobranca-caixa/ESP_COD_BARRAS_SIGCB_COBRANCA_CAIXA.pdf)
  */
@@ -29,7 +15,14 @@ type Caixa struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			Company
+	Company			*Company
+}
+
+var configCaixa = bankConfig{
+	Id: 104,
+	Aceite: "N",
+	Currency: 9,
+	CurrencyName: "R$",
 }
 
 func (b Caixa) Barcode(d Document) string {
