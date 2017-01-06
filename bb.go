@@ -35,7 +35,31 @@ type BB struct {
 }
 
 func (b BB) Barcode(d Document) string {
-	return "1001.011011.1 123002 2"
+	var barcode = Barcode{
+		Field1: Field1{
+			bank: configBB["ID"].(int),
+			currency: configBB["Currency"].(int),
+			numbers: 4444,
+			dv: 8,
+		},
+		Field2: Field2{
+			numbers: 999999999,
+			dv: 8,
+		},
+		Field3: Field3{
+			numbers: 999999999,
+			dv: 8,
+		},
+		Field4: Field4{
+			dv: 8,
+		},
+		Field5: Field5{
+			dueDate: 4444,
+			value: 0000000001,
+		},
+	}
+
+	return generateBarcode(barcode)
 }
 
 func (b BB) BarcodeImage(d Document) base64.Encoding {
