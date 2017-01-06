@@ -10,6 +10,9 @@ Gerador de boletos para diversos bancos usando Go.
 * Boletos simples e registrados;
 * Gera remessas para os bancos;
 
+## Usage
+Trabalhando nisso ainda...
+
 ## TODO
 * Gerar imagens dos codigos de barras;
 * Gerar layout dos boletos;
