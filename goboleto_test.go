@@ -6,6 +6,10 @@ import (
 )
 
 func init() {
+	BilletBB()
+}
+
+func BilletBB() {
 
 	// static data
 	var bank Bank = BB {

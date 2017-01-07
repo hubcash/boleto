@@ -4,30 +4,23 @@ import (
 	"encoding/base64"
 )
 
-/*
-Bank is defined as an interface,
-then we force to implement these functions:
-
-@Barcode Get the barcode, it may contain dots and spaces
-@BarcodeImage Return a image/base64, based in barcode
-@Layout the HTML template with all the data
-
- */
+// Bank is defined as an interface,
+// then we force to implement these functions:
+// @Barcode Get the barcode, return string, it may contain dots and spaces
+// @BarcodeImage Return a image/base64, using a document
+// @Layout return a HTML template using a document
 type Bank interface {
 	Barcode(Document) string
 	BarcodeImage(Document) base64.Encoding
 	Layout(Document)
 }
 
-/*
-Defines a bank configuration type,
-holds constants to use it
-
-@Id FEBRABAN bank identifier
-@Aceite if the payer accepted the billet
-@Currency the currency identifier
-@CurrencyName the currency name
- */
+// Defines a bank configuration type,
+// holds constants to use it:
+// @Id FEBRABAN bank identifier
+// @Aceite if the payer accepted the billet
+// @Currency the currency identifier
+// @CurrencyName the currency name
 type bankConfig struct {
 	Id 		int
 	Aceite 		string

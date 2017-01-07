@@ -4,10 +4,8 @@ import (
 	"encoding/base64"
 )
 
-/*
-BB - Banco do Brasil
-Source: (http://www.bb.com.br/docs/pub/emp/mpe/espeboletobb.pdf)
- */
+// BB - Banco do Brasil
+// Source: (http://www.bb.com.br/docs/pub/emp/mpe/espeboletobb.pdf)
 type BB struct {
 	Agency 			int
 	Account			int
@@ -20,6 +18,7 @@ type BB struct {
 	Company			*Company
 }
 
+// configBB is a global for this bank configs
 var configBB = bankConfig{
 	Id: 001,
 	Aceite: "N",
@@ -27,6 +26,7 @@ var configBB = bankConfig{
 	CurrencyName: "R$",
 }
 
+// Barcode Get the barcode, return string, it may contain dots and spaces
 func (b BB) Barcode(d Document) string {
 	var barcode = Barcode{
 		Field1: Field1{
@@ -55,11 +55,13 @@ func (b BB) Barcode(d Document) string {
 	return generateBarcode(barcode)
 }
 
+// BarcodeImage return a image/base64, using a document
 func (b BB) BarcodeImage(d Document) base64.Encoding {
 	// TODO
 	return base64.Encoding{}
 }
 
+// Layout return a HTML template using a document
 func (b BB) Layout(d Document) {
 	// TODO
 }
