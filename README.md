@@ -11,7 +11,8 @@ Gerador de boletos para diversos bancos usando Go.
 * Gera remessas para os bancos;
 
 ## Usage
-Trabalhando nisso ainda...
+
+[Veja a documentação no GoDoc](https://godoc.org/github.com/kezzbr/goboleto)
 
 ## TODO
 * Gerar imagens dos codigos de barras;
