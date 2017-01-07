@@ -1,6 +1,8 @@
 package goboleto
 
-import "encoding/base64"
+import (
+	"encoding/base64"
+)
 
 // CEF - Caixa econômica federal
 // Source: (http://www.caixa.gov.br/Downloads/cobranca-caixa/ESP_COD_BARRAS_SIGCB_COBRANCA_CAIXA.pdf)
@@ -33,6 +35,11 @@ func (b Caixa) Barcode(d Document) string {
 func (b Caixa) BarcodeImage(d Document) base64.Encoding {
 	// TODO
 	return base64.Encoding{}
+}
+
+// Transference Return the transference file (arquivo de remessa)
+func (b Caixa) Transference(d Document) {
+	// TODO
 }
 
 // Layout return a HTML template using a document

@@ -6,11 +6,11 @@ const barcodeLength = 44
 // Barcode is an alias for "Linha digitavel"
 // Defines a barcode type to organize the fields data
 type Barcode struct {
-	Field1		Field1
-	Field2		Field2
-	Field3		Field3
-	Field4		Field4
-	Field5		Field5
+	Field1		*Field1
+	Field2		*Field2
+	Field3		*Field3
+	Field4		*Field4
+	Field5		*Field5
 }
 
 // Field 1: AAABC.CCCCX
@@ -19,48 +19,48 @@ type Barcode struct {
 // C = 20-24 numbers
 // X = DV
 type Field1 struct {
-	bank		int
-	currency	int
-	numbers		int
-	dv		int
+	Bank		int
+	Currency	int
+	Numbers		int
+	Dv		int
 }
 
 // Field 2: DDDDD.DDDDDX
 // D = 25-34 numbers
 // X = DV
 type Field2 struct {
-	numbers		int
-	dv		int
+	Numbers		int
+	Dv		int
 }
 
 // Field 3: EEEEE.EEEEEX
 // E = 35-44 numbers
 // X = DV
 type Field3 struct {
-	numbers		int
-	dv		int
+	Numbers		int
+	Dv		int
 }
 
 // Field 4: X
 // X = DV
 type Field4 struct {
-	dv		int
+	Dv		int
 }
 
 // Field 5: UUUUVVVVVVVVVV
 // U = Due date factor
-// V = Value, two decimal
+// V = Value, as integer
 type Field5 struct {
-	dueDate		int
-	value		int
+	DateDue		int
+	Value		int
 }
 
 // Barcode format (all fields together):
 // AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV
 // generateBarcode mount the barcode numbers
 func generateBarcode(b Barcode) string {
-	return "1001.011011.1 123002 2"
+	return "1001.011011.1 123002 2 - "
 }
 
 // TODO digitos verificadores
-// TODO modulo10()
+// TODO modulo10() e modulo11()

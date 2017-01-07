@@ -40,6 +40,7 @@ func BilletBB() {
 		ValueForfeit: 199.99,
 		FebrabanType: "md",
 		Date: time.Now(),
+		DateDue: time.Now().AddDate(0, 0, 4),
 		Instructions: [6]string{
 			"Não receber após o vencimento",
 			"Após vencimento, receber apenas no meu banco",

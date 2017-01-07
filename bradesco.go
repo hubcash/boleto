@@ -1,6 +1,8 @@
 package goboleto
 
-import "encoding/base64"
+import (
+	"encoding/base64"
+)
 
 // Bradesco
 // Source: (https://banco.bradesco/assets/pessoajuridica/pdf/4008-524-0121-08-layout-cobranca-versao-portuguesSS28785.pdf)
@@ -33,6 +35,11 @@ func (b Bradesco) Barcode(d Document) string {
 func (b Bradesco) BarcodeImage(d Document) base64.Encoding {
 	// TODO
 	return base64.Encoding{}
+}
+
+// Transference Return the transference file (arquivo de remessa)
+func (b Bradesco) Transference(d Document) {
+	// TODO
 }
 
 // Layout return a HTML template using a document

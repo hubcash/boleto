@@ -28,30 +28,28 @@ var configBB = bankConfig{
 
 // Barcode Get the barcode, return string, it may contain dots and spaces
 func (b BB) Barcode(d Document) string {
-	var barcode = Barcode{
-		Field1: Field1{
-			bank: configBB.Id,
-			currency: configBB.Currency,
-			numbers: 4444,
-			dv: 8,
-		},
-		Field2: Field2{
-			numbers: 999999999,
-			dv: 8,
-		},
-		Field3: Field3{
-			numbers: 999999999,
-			dv: 8,
-		},
-		Field4: Field4{
-			dv: 8,
-		},
-		Field5: Field5{
-			dueDate: 4444,
-			value: 0000000001,
-		},
+	var barcode = Barcode{}
+	barcode.Field1 = &Field1{
+		Bank: configBB.Id,
+		Currency: configBB.Currency,
+		Numbers: 4444,
+		Dv: 8,
 	}
-
+	barcode.Field2 = &Field2{
+		Numbers: 999999999,
+		Dv: 8,
+	}
+	barcode.Field3 = &Field3{
+		Numbers: 999999999,
+		Dv: 8,
+	}
+	barcode.Field4 = &Field4{
+		Dv: 8,
+	}
+	barcode.Field5 = &Field5{
+		DateDue: dateDueFactor(d.DateDue),
+		Value: formatValue(d.Value),
+	}
 	return generateBarcode(barcode)
 }
 
@@ -59,6 +57,11 @@ func (b BB) Barcode(d Document) string {
 func (b BB) BarcodeImage(d Document) base64.Encoding {
 	// TODO
 	return base64.Encoding{}
+}
+
+// Transference Return the transference file (arquivo de remessa)
+func (b BB) Transference(d Document) {
+	// TODO
 }
 
 // Layout return a HTML template using a document

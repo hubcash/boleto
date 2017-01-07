@@ -1,6 +1,8 @@
 package goboleto
 
-import "encoding/base64"
+import (
+	"encoding/base64"
+)
 
 // Santander
 // Source: (https://www.santander.com.br/document/wps/sl-tabela-de-tarifas-cobranca.pdf)
@@ -33,6 +35,11 @@ func (b Santander) Barcode(d Document) string {
 func (b Santander) BarcodeImage(d Document) base64.Encoding {
 	// TODO
 	return base64.Encoding{}
+}
+
+// Transference Return the transference file (arquivo de remessa)
+func (b Santander) Transference(d Document) {
+	// TODO
 }
 
 // Layout return a HTML template using a document
