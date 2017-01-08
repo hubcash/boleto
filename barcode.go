@@ -1,11 +1,8 @@
 package goboleto
 
-// Max length of a barcode
-const barcodeLength = 44
-
-// Barcode is an alias for "Linha digitavel"
-// Defines a barcode type to organize the fields data
-type Barcode struct {
+// BarcodeDigitable is an alias for "Linha digitavel"
+// Defines a type to organize the fields data
+type BarcodeDigitable struct {
 	Field1		*Field1
 	Field2		*Field2
 	Field3		*Field3
@@ -52,15 +49,11 @@ type Field4 struct {
 // V = Value, as integer
 type Field5 struct {
 	DateDue		int
-	Value		int
+	Value		string
 }
 
-// Barcode format (all fields together):
-// AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV
-// generateBarcode mount the barcode numbers
-func generateBarcode(b Barcode) string {
+// generateBarcodeDigitable mount the barcode digitable,
+// taking all fields together: AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV
+func generateBarcodeDigitable(n BarcodeDigitable) string {
 	return "1001.011011.1 123002 2 - "
 }
-
-// TODO digitos verificadores
-// TODO modulo10() e modulo11()

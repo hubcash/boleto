@@ -26,31 +26,37 @@ var configBB = bankConfig{
 	CurrencyName: "R$",
 }
 
-// Barcode Get the barcode, return string, it may contain dots and spaces
+// Barcode Get the barcode
 func (b BB) Barcode(d Document) string {
-	var barcode = Barcode{}
-	barcode.Field1 = &Field1{
+	return "12345678911111111112222222222333333333344444";
+}
+
+// Barcode Get the barcode digitable number (Linha digitavel), return string,
+// it may contain dots and spaces
+func (b BB) BarcodeDigitable(d Document) string {
+	var n = BarcodeDigitable{}
+	n.Field1 = &Field1{
 		Bank: configBB.Id,
 		Currency: configBB.Currency,
 		Numbers: 4444,
 		Dv: 8,
 	}
-	barcode.Field2 = &Field2{
+	n.Field2 = &Field2{
 		Numbers: 999999999,
 		Dv: 8,
 	}
-	barcode.Field3 = &Field3{
+	n.Field3 = &Field3{
 		Numbers: 999999999,
 		Dv: 8,
 	}
-	barcode.Field4 = &Field4{
+	n.Field4 = &Field4{
 		Dv: 8,
 	}
-	barcode.Field5 = &Field5{
+	n.Field5 = &Field5{
 		DateDue: dateDueFactor(d.DateDue),
 		Value: formatValue(d.Value),
 	}
-	return generateBarcode(barcode)
+	return generateBarcodeDigitable(n)
 }
 
 // BarcodeImage return a image/base64, using a document

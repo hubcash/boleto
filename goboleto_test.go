@@ -12,7 +12,7 @@ func init() {
 func BilletBB() {
 
 	// static data
-	var bank Bank = BB {
+	var bank Bank = BB{
 		Account: 8888,
 		Agency: 99999,
 		Contrato: 12312351,
@@ -33,7 +33,6 @@ func BilletBB() {
 	// dynamic data
 	var document = Document{
 		Id: 123,
-		NossoNumero: 123,
 		Value: 999.99,
 		ValueTax: 1.00,
 		ValueDiscount: 0.00,
@@ -51,7 +50,8 @@ func BilletBB() {
 			Contact: "Email e telefone",
 		},
 	}
-
+	
+	fmt.Println(bank.BarcodeDigitable(document))
 	fmt.Println(bank.Barcode(document))
 	
 }

@@ -26,8 +26,14 @@ var configBradesco = bankConfig{
 	CurrencyName: "R$",
 }
 
-// Barcode Get the barcode, return string, it may contain dots and spaces
+// Barcode Get the barcode
 func (b Bradesco) Barcode(d Document) string {
+	return "12345678911111111112222222222333333333344444";
+}
+
+// Barcode Get the barcode digitable number (Linha digitavel), return string,
+// it may contain dots and spaces
+func (b Bradesco) BarcodeDigitable(d Document) string {
 	return "1001.011011.1 123002 2"
 }
 

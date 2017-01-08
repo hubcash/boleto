@@ -4,8 +4,10 @@ import (
 	"time"
 	"strings"
 	"fmt"
-	"strconv"
 )
+
+// The size of the value formated
+const valueMinSize = 10;
 
 // Defines a document type,
 // holds the data of the billet itself
@@ -19,7 +21,6 @@ import (
 // @ValueForfeit juros/multa
 type Document struct {
 	Id 		int
-	NossoNumero 	int
 	Date		time.Time
 	DateDue		time.Time
 	Value 		float64
@@ -40,15 +41,23 @@ func dateDueFactor(dateDue time.Time) int {
 }
 
 // formatValue format the Document Value,
-// in order to replace dots and commas, and convert to int
-func formatValue(v float64) int {
-	value := fmt.Sprint(v)
-	value = strings.Replace(value, ",", "", -1)
-	value = strings.Replace(value, ".", "", -1)
+// in order to replace dots and commas, and return a string,
+// with valueFormatedSize length
+func formatValue(v float64) string {
+	s := fmt.Sprint(v)
+	s = strings.Replace(s, ",", "", -1)
+	s = strings.Replace(s, ".", "", -1)
 	
-	i, err := strconv.Atoi(value)
-	if err != nil {
-		panic("Error formating the value")
-	}
-	return i;
+	// add left zeros
+	l := len(s)
+	s = strings.Repeat("0", (valueMinSize-l)) + s
+	return s;
+}
+
+func modulo10() {
+	// TODO
+}
+
+func modulo11() {
+	// TODO
 }
