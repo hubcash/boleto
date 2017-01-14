@@ -1,9 +1,5 @@
 package goboleto
 
-import (
-	"encoding/base64"
-)
-
 // CEF - Caixa econômica federal
 // Source: (http://www.caixa.gov.br/Downloads/cobranca-caixa/ESP_COD_BARRAS_SIGCB_COBRANCA_CAIXA.pdf)
 type Caixa struct {
@@ -15,7 +11,7 @@ type Caixa struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			*Company
+	Company			Company
 }
 
 // configCaixa is a global for this bank configs
@@ -27,20 +23,15 @@ var configCaixa = bankConfig{
 }
 
 // Barcode Get the barcode
-func (b Caixa) Barcode(d Document) string {
-	return "12345678911111111112222222222333333333344444";
-}
-
-// Barcode Get the barcode digitable number (Linha digitavel), return string,
-// it may contain dots and spaces
-func (b Caixa) BarcodeDigitable(d Document) string {
-	return "1001.011011.1 123002 2"
-}
-
-// BarcodeImage return a image/base64, using a document
-func (b Caixa) BarcodeImage(d Document) base64.Encoding {
-	// TODO
-	return base64.Encoding{}
+func (b Caixa) Barcode(d Document) BarcodeNumber {
+	n := BarcodeNumber{
+		BankId: configCaixa.Id,
+		CurrencyId: configCaixa.Currency,
+		DateDueFactor: dateDueFactor(d.DateDue),
+		Value: formatValue(d.Value),
+	}
+	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	return n
 }
 
 // Transference Return the transference file (arquivo de remessa)

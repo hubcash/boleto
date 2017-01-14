@@ -11,7 +11,7 @@ func init() {
 
 func BilletBB() {
 
-	// static data
+	// static data, you should keep this configured in somewhere
 	var bank Bank = BB{
 		Account: 8888,
 		Agency: 99999,
@@ -21,7 +21,7 @@ func BilletBB() {
 		FormatacaoConvenio: 1,
 		FormatacaoNossoNumero: 1,
 		VariacaoCarteira: 6,
-		Company: &Company{
+		Company: Company{
 			Name: "Nome da empresa",
 			LegalName: "Razao social",
 			Address: "Endereço",
@@ -30,7 +30,7 @@ func BilletBB() {
 		},
 	}
 
-	// dynamic data
+	// dynamic data, you should have this data coming from a database
 	var document = Document{
 		Id: 123,
 		Value: 999.99,
@@ -44,14 +44,20 @@ func BilletBB() {
 			"Não receber após o vencimento",
 			"Após vencimento, receber apenas no meu banco",
 		},
-		Payer: &Payer{
+		Payer: Payer{
 			Name: "Nome completo",
 			Address: "Endereço",
 			Contact: "Email e telefone",
 		},
 	}
 	
-	fmt.Println(bank.BarcodeDigitable(document))
-	fmt.Println(bank.Barcode(document))
+	// Print the layout
+	bank.Layout(document)
+	
+	// Optional, to use in your backend
+	var barcode = bank.Barcode(document)
+	var _ = barcode.Image()
+	digitable := barcode.Digitable()
+	fmt.Println(digitable)
 	
 }

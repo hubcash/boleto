@@ -1,9 +1,5 @@
 package goboleto
 
-import (
-	"encoding/base64"
-)
-
 // Bradesco
 // Source: (https://banco.bradesco/assets/pessoajuridica/pdf/4008-524-0121-08-layout-cobranca-versao-portuguesSS28785.pdf)
 type Bradesco struct {
@@ -15,7 +11,7 @@ type Bradesco struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			*Company
+	Company			Company
 }
 
 // configBradesco is a global for this bank configs
@@ -27,20 +23,15 @@ var configBradesco = bankConfig{
 }
 
 // Barcode Get the barcode
-func (b Bradesco) Barcode(d Document) string {
-	return "12345678911111111112222222222333333333344444";
-}
-
-// Barcode Get the barcode digitable number (Linha digitavel), return string,
-// it may contain dots and spaces
-func (b Bradesco) BarcodeDigitable(d Document) string {
-	return "1001.011011.1 123002 2"
-}
-
-// BarcodeImage return a image/base64, using a document
-func (b Bradesco) BarcodeImage(d Document) base64.Encoding {
-	// TODO
-	return base64.Encoding{}
+func (b Bradesco) Barcode(d Document) BarcodeNumber {
+	n := BarcodeNumber{
+		BankId: configBradesco.Id,
+		CurrencyId: configBradesco.Currency,
+		DateDueFactor: dateDueFactor(d.DateDue),
+		Value: formatValue(d.Value),
+	}
+	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	return n
 }
 
 // Transference Return the transference file (arquivo de remessa)

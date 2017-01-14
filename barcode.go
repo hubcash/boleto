@@ -1,59 +1,72 @@
 package goboleto
 
-// BarcodeDigitable is an alias for "Linha digitavel"
-// Defines a type to organize the fields data
-type BarcodeDigitable struct {
-	Field1		*Field1
-	Field2		*Field2
-	Field3		*Field3
-	Field4		*Field4
-	Field5		*Field5
+import (
+	"encoding/base64"
+)
+
+// Barcode is defined as an interface,
+// then we force to implement these functions:
+// @Image Return a image/base64, using a BarcodeNumber
+// @Digitable Get the barcode digitable, it may contain dots and spaces
+type Barcode interface {
+	Image() 	base64.Encoding
+	Digitable() 	string
+	Dv()
 }
 
+// Defines a barcode number type,
+// holds numbers of the barcode
+type BarcodeNumber struct {
+	// Codigo do banco int(3)
+	BankId 		int
+	// Codigo da moeda int(1)
+	CurrencyId 	int
+	// Fator de vencimento int(4)
+	DateDueFactor 	int
+	// Valor formatado int(10)
+	Value 		int
+	// Campo livre, numeros do banco com nosso numero int(24)
+	BankNumbers	int
+	// Digito verificador do codigo de barras int(1)
+	dv 		int
+}
+
+// Dv returns the BarcodeNumber verification number using module11
+func (n *BarcodeNumber) Dv() {
+	n.dv = module11(n)
+}
+
+// Image return a image/base64, using a BarcodeNumber
+func (n BarcodeNumber) Image() base64.Encoding {
+	// TODO
+	return base64.Encoding{}
+}
+
+// Digitable mount the barcode digitable number,
+// taking all fields together:
 // Field 1: AAABC.CCCCX
 // A = FEBRABAN Bank identifier
 // B = the currency identifier
-// C = 20-24 numbers
+// C = 20-24 barcode numbers
 // X = DV
-type Field1 struct {
-	Bank		int
-	Currency	int
-	Numbers		int
-	Dv		int
-}
-
+//
 // Field 2: DDDDD.DDDDDX
-// D = 25-34 numbers
+// D = 25-34 barcode numbers
 // X = DV
-type Field2 struct {
-	Numbers		int
-	Dv		int
-}
-
+//
 // Field 3: EEEEE.EEEEEX
-// E = 35-44 numbers
+// E = 35-44 barcode numbers
 // X = DV
-type Field3 struct {
-	Numbers		int
-	Dv		int
-}
-
+//
 // Field 4: X
 // X = DV
-type Field4 struct {
-	Dv		int
-}
-
+//
 // Field 5: UUUUVVVVVVVVVV
 // U = Due date factor
 // V = Value, as integer
-type Field5 struct {
-	DateDue		int
-	Value		string
-}
-
-// generateBarcodeDigitable mount the barcode digitable,
-// taking all fields together: AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV
-func generateBarcodeDigitable(n BarcodeDigitable) string {
-	return "1001.011011.1 123002 2 - "
+//
+// return AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV
+func (n BarcodeNumber) Digitable() string {
+	// TODO
+	return "AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV"
 }

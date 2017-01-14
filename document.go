@@ -4,6 +4,7 @@ import (
 	"time"
 	"strings"
 	"fmt"
+	"strconv"
 )
 
 // The size of the value formated
@@ -29,7 +30,7 @@ type Document struct {
 	ValueForfeit	float64
 	FebrabanType	string
 	Instructions 	[6]string
-	Payer		*Payer
+	Payer		Payer
 }
 
 // dateDueFactor use a DateDue type time.Time to return a int,
@@ -41,23 +42,24 @@ func dateDueFactor(dateDue time.Time) int {
 }
 
 // formatValue format the Document Value,
-// in order to replace dots and commas, and return a string,
-// with valueFormatedSize length
-func formatValue(v float64) string {
+// in order to replace dots and commas
+func formatValue(v float64) int {
 	s := fmt.Sprint(v)
 	s = strings.Replace(s, ",", "", -1)
 	s = strings.Replace(s, ".", "", -1)
 	
-	// add left zeros
-	l := len(s)
-	s = strings.Repeat("0", (valueMinSize-l)) + s
-	return s;
+	value, _ := strconv.Atoi(s)
+	return value
 }
 
-func modulo10() {
+func module10(n *BarcodeNumber) int {
+	// To add pad to numbers: fmt.Sprintf("%010d", int)
 	// TODO
+	return 1
 }
 
-func modulo11() {
+func module11(n *BarcodeNumber) int {
+	// To add pad to numbers: fmt.Sprintf("%010d", int)
 	// TODO
+	return 1
 }

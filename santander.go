@@ -1,9 +1,5 @@
 package goboleto
 
-import (
-	"encoding/base64"
-)
-
 // Santander
 // Source: (https://www.santander.com.br/document/wps/sl-tabela-de-tarifas-cobranca.pdf)
 type Santander struct {
@@ -15,7 +11,7 @@ type Santander struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			*Company
+	Company			Company
 }
 
 // configSantander is a global for this bank configs
@@ -27,20 +23,15 @@ var configSantander = bankConfig{
 }
 
 // Barcode Get the barcode
-func (b Santander) Barcode(d Document) string {
-	return "12345678911111111112222222222333333333344444";
-}
-
-// Barcode Get the barcode digitable number (Linha digitavel), return string,
-// it may contain dots and spaces
-func (b Santander) BarcodeDigitable(d Document) string {
-	return "1001.011011.1 123002 2"
-}
-
-// BarcodeImage return a image/base64, using a document
-func (b Santander) BarcodeImage(d Document) base64.Encoding {
-	// TODO
-	return base64.Encoding{}
+func (b Santander) Barcode(d Document) BarcodeNumber {
+	n := BarcodeNumber{
+		BankId: configSantander.Id,
+		CurrencyId: configSantander.Currency,
+		DateDueFactor: dateDueFactor(d.DateDue),
+		Value: formatValue(d.Value),
+	}
+	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	return n
 }
 
 // Transference Return the transference file (arquivo de remessa)

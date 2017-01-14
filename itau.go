@@ -1,9 +1,5 @@
 package goboleto
 
-import (
-	"encoding/base64"
-)
-
 // Itau
 // Source: (http://download.itau.com.br/bankline/cobranca_cnab240.pdf)
 type Itau struct {
@@ -15,7 +11,7 @@ type Itau struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			*Company
+	Company			Company
 }
 
 // configItau is a global for this bank configs
@@ -27,20 +23,15 @@ var configItau = bankConfig{
 }
 
 // Barcode Get the barcode
-func (b Itau) Barcode(d Document) string {
-	return "12345678911111111112222222222333333333344444";
-}
-
-// Barcode Get the barcode digitable number (Linha digitavel), return string,
-// it may contain dots and spaces
-func (b Itau) BarcodeDigitable(d Document) string {
-	return "1001.011011.1 123002 2"
-}
-
-// BarcodeImage return a image/base64, using a document
-func (b Itau) BarcodeImage(d Document) base64.Encoding {
-	// TODO
-	return base64.Encoding{}
+func (b Itau) Barcode(d Document) BarcodeNumber {
+	n := BarcodeNumber{
+		BankId: configItau.Id,
+		CurrencyId: configItau.Currency,
+		DateDueFactor: dateDueFactor(d.DateDue),
+		Value: formatValue(d.Value),
+	}
+	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	return n
 }
 
 // Transference Return the transference file (arquivo de remessa)

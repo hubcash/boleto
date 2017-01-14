@@ -1,9 +1,5 @@
 package goboleto
 
-import (
-	"encoding/base64"
-)
-
 // BB - Banco do Brasil
 // Source: (http://www.bb.com.br/docs/pub/emp/mpe/espeboletobb.pdf)
 type BB struct {
@@ -15,7 +11,7 @@ type BB struct {
 	VariacaoCarteira	int
 	FormatacaoConvenio	int
 	FormatacaoNossoNumero	int
-	Company			*Company
+	Company			Company
 }
 
 // configBB is a global for this bank configs
@@ -27,42 +23,15 @@ var configBB = bankConfig{
 }
 
 // Barcode Get the barcode
-func (b BB) Barcode(d Document) string {
-	return "12345678911111111112222222222333333333344444";
-}
-
-// Barcode Get the barcode digitable number (Linha digitavel), return string,
-// it may contain dots and spaces
-func (b BB) BarcodeDigitable(d Document) string {
-	var n = BarcodeDigitable{}
-	n.Field1 = &Field1{
-		Bank: configBB.Id,
-		Currency: configBB.Currency,
-		Numbers: 4444,
-		Dv: 8,
-	}
-	n.Field2 = &Field2{
-		Numbers: 999999999,
-		Dv: 8,
-	}
-	n.Field3 = &Field3{
-		Numbers: 999999999,
-		Dv: 8,
-	}
-	n.Field4 = &Field4{
-		Dv: 8,
-	}
-	n.Field5 = &Field5{
-		DateDue: dateDueFactor(d.DateDue),
+func (b BB) Barcode(d Document) BarcodeNumber {
+	n := BarcodeNumber{
+		BankId: configBB.Id,
+		CurrencyId: configBB.Currency,
+		DateDueFactor: dateDueFactor(d.DateDue),
 		Value: formatValue(d.Value),
 	}
-	return generateBarcodeDigitable(n)
-}
-
-// BarcodeImage return a image/base64, using a document
-func (b BB) BarcodeImage(d Document) base64.Encoding {
-	// TODO
-	return base64.Encoding{}
+	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	return n
 }
 
 // Transference Return the transference file (arquivo de remessa)
