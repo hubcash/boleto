@@ -7,8 +7,19 @@ import (
 	"strconv"
 )
 
-// The size of the value formated
-const valueMinSize = 10;
+const (
+	// The min size of a bankId
+	bankMinSize = 3
+	
+	// The min size of the value formated
+	valueMinSize = 10
+	
+	// Start multiplier for module 11
+	startModule11 = 9
+	
+	// End multiplier for module 11
+	endModule11 = 2
+)
 
 // Defines a document type,
 // holds the data of the billet itself
@@ -58,8 +69,13 @@ func module10(n *BarcodeNumber) int {
 	return 1
 }
 
-func module11(n *BarcodeNumber) int {
-	// To add pad to numbers: fmt.Sprintf("%010d", int)
+// module11 takes a number and returns his verifier digit (spect an string
+// because it may contain left zeros and pad numbers)
+// Each digit that makes up our number is multiplied by his multiplier,
+// the multipliers range from 9 to 2, from right to left
+// Multiplication results are summed and divided by eleven
+func module11(n string) int {
+	
 	// TODO
 	return 1
 }

@@ -59,5 +59,6 @@ func BilletBB() {
 	var _ = barcode.Image()
 	digitable := barcode.Digitable()
 	fmt.Println(digitable)
+	fmt.Println(barcode.toString())
 	
 }

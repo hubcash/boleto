@@ -27,7 +27,7 @@ func (b BB) Barcode(d Document) BarcodeNumber {
 	n := BarcodeNumber{
 		BankId: configBB.Id,
 		CurrencyId: configBB.Currency,
-		DateDueFactor: dateDueFactor(d.DateDue),
+		DateDueFactor:  dateDueFactor(d.DateDue),
 		Value: formatValue(d.Value),
 	}
 	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)

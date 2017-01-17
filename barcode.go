@@ -2,6 +2,8 @@ package goboleto
 
 import (
 	"encoding/base64"
+	"fmt"
+	"strconv"
 )
 
 // Barcode is defined as an interface,
@@ -33,7 +35,7 @@ type BarcodeNumber struct {
 
 // Dv returns the BarcodeNumber verification number using module11
 func (n *BarcodeNumber) Dv() {
-	n.dv = module11(n)
+	n.dv = module11(n.toString())
 }
 
 // Image return a image/base64, using a BarcodeNumber
@@ -69,4 +71,16 @@ func (n BarcodeNumber) Image() base64.Encoding {
 func (n BarcodeNumber) Digitable() string {
 	// TODO
 	return "AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV"
+}
+
+// toString takes numbers of the barcode, and converts to a string,
+// including pad numbers and left zeros
+func (n *BarcodeNumber) toString() string {
+	var s = fmt.Sprintf("%0"+strconv.Itoa(bankMinSize)+"d", n.BankId)
+	s = s + strconv.Itoa(n.CurrencyId)
+	s = s + strconv.Itoa(n.DateDueFactor)
+	s = s + strconv.Itoa(n.DateDueFactor)
+	s = s + fmt.Sprintf("%0"+strconv.Itoa(valueMinSize)+"d", n.Value)
+	s = s + strconv.Itoa(n.BankNumbers)
+	return s
 }
