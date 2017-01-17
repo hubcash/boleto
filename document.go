@@ -14,11 +14,11 @@ const (
 	// The min size of the value formated
 	valueMinSize = 10
 	
-	// Start multiplier for module 11
-	startModule11 = 9
+	// Max multiplier for module 11
+	maxModule11 = 9
 	
-	// End multiplier for module 11
-	endModule11 = 2
+	// min multiplier for module 11
+	minModule11 = 2
 )
 
 // Defines a document type,
@@ -64,18 +64,70 @@ func formatValue(v float64) int {
 }
 
 func module10(n *BarcodeNumber) int {
-	// To add pad to numbers: fmt.Sprintf("%010d", int)
 	// TODO
 	return 1
 }
 
 // module11 takes a number and returns his verifier digit (spect an string
 // because it may contain left zeros and pad numbers)
-// Each digit that makes up our number is multiplied by his multiplier,
+// Each digit that makes up our number is multiplied by his multiplier weight,
 // the multipliers range from 9 to 2, from right to left
 // Multiplication results are summed and divided by eleven
-func module11(n string) int {
+func module11(s string) int {
+	// Create a slice with the numbers
+	numbers := make([]int, len(s))
+	for i, r := range s {
+		c := string(r)
+		n, _ := strconv.Atoi(c)
+		numbers[i] = n
+	}
+	numbersLen := len(numbers)
 	
-	// TODO
-	return 1
+	// initial multiplier weight
+	var p = maxModule11
+	if numbersLen > 11 {
+		p = minModule11
+	}
+
+	// Inverse the numbers creating for loop
+	// Multiply all numbers using multiplier weight
+	total := 0
+	for i := len(numbers)-1; i >= 0; i-- {
+		n := numbers[i]
+		total += (n*p)
+		
+		// If the numbers length is higher than 11,
+		// we need to inverse the min and max
+		if numbersLen > 11 {
+			p++
+			// if the multiplier weight is higher then max
+			if p > maxModule11 {
+				p = minModule11
+			}
+			continue
+		}
+		
+		p--
+		// if the multiplier weight is lower then minimal
+		if p < minModule11 {
+			p = maxModule11
+		}
+		
+	}
+	
+	// If the numbers length is higher than 11,
+	// we need to divide also by 11
+	if numbersLen > 11 {
+		dv := total % 11
+		dv = 11 - dv
+		// If the verifier digit is equal 0, 10, 11,
+		// need to be always 1
+		if dv == 0 || dv == 10 || dv == 11 {
+			dv = 1
+		}
+		return dv
+	}
+	
+	// End by dividing
+	return total % 11
 }

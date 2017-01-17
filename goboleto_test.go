@@ -55,10 +55,9 @@ func BilletBB() {
 	bank.Layout(document)
 	
 	// Optional, to use in your backend
-	var barcode = bank.Barcode(document)
-	var _ = barcode.Image()
-	digitable := barcode.Digitable()
-	fmt.Println(digitable)
-	fmt.Println(barcode.toString())
+	//var barcode = bank.Barcode(document)
+	//image := barcode.Image()
+	//digitable := barcode.Digitable()
+	fmt.Println(module11("0019373700000001000500940144816060680935031"))
 	
 }
