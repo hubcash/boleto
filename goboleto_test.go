@@ -17,7 +17,7 @@ func BilletBB() {
 		Agency: 99999,
 		Contrato: 12312351,
 		Carteira: 15,
-		Convenio: 7,
+		Convenio: 1234,
 		FormatacaoConvenio: 1,
 		FormatacaoNossoNumero: 1,
 		VariacaoCarteira: 6,
@@ -51,13 +51,14 @@ func BilletBB() {
 		},
 	}
 	
+	
 	// Print the layout
-	bank.Layout(document)
+	//bank.Layout(document)
 	
 	// Optional, to use in your backend
-	//var barcode = bank.Barcode(document)
+	var barcode = bank.Barcode(document)
+	fmt.Println(barcode.toString())
 	//image := barcode.Image()
 	//digitable := barcode.Digitable()
-	fmt.Println(module11("0019373700000001000500940144816060680935031"))
 	
 }

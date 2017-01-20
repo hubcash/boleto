@@ -6,6 +6,17 @@ import (
 	"strconv"
 )
 
+const (
+	// The min size of a bankId
+	bankMinSize = 3
+	
+	// The min size of the value formated
+	valueMinSize = 10
+	
+	// The min size of a barcode
+	barcodeNumberMinSize = 19
+)
+
 // Barcode is defined as an interface,
 // then we force to implement these functions:
 // @Image Return a image/base64, using a BarcodeNumber
@@ -35,6 +46,9 @@ type BarcodeNumber struct {
 
 // Dv returns the BarcodeNumber verification number using module11
 func (n *BarcodeNumber) Dv() {
+	if n.dv != 0 {
+		panic("BarcodeNumber verification number already created")
+	}
 	n.dv = module11(n.toString())
 }
 
@@ -69,7 +83,7 @@ func (n BarcodeNumber) Image() base64.Encoding {
 //
 // return AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV
 func (n BarcodeNumber) Digitable() string {
-	// TODO
+	// TODO, return digits by using module10
 	return "AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV"
 }
 
@@ -82,5 +96,10 @@ func (n *BarcodeNumber) toString() string {
 	s = s + strconv.Itoa(n.DateDueFactor)
 	s = s + fmt.Sprintf("%0"+strconv.Itoa(valueMinSize)+"d", n.Value)
 	s = s + strconv.Itoa(n.BankNumbers)
+	s = s + strconv.Itoa(n.dv)
+
+	if len(s) <= barcodeNumberMinSize {
+		panic("There are missing numbers in Bank and Document structures")
+	}
 	return s
 }

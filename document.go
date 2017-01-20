@@ -8,17 +8,12 @@ import (
 )
 
 const (
-	// The min size of a bankId
-	bankMinSize = 3
-	
-	// The min size of the value formated
-	valueMinSize = 10
-	
 	// Max multiplier for module 11
 	maxModule11 = 9
 	
 	// min multiplier for module 11
 	minModule11 = 2
+	
 )
 
 // Defines a document type,
@@ -49,7 +44,11 @@ type Document struct {
 func dateDueFactor(dateDue time.Time) int {
 	var dateDueFixed = time.Date(1997, 10, 07, 0, 0, 0, 0, time.UTC)
 	dif := dateDue.Sub(dateDueFixed);
-	return int(dif.Hours()/24);
+	dif = int(dif.Hours()/24);
+	if dif <= 0 {
+		panic("Document DateDue must be in the future")
+	}
+	return dif
 }
 
 // formatValue format the Document Value,
@@ -59,7 +58,10 @@ func formatValue(v float64) int {
 	s = strings.Replace(s, ",", "", -1)
 	s = strings.Replace(s, ".", "", -1)
 	
-	value, _ := strconv.Atoi(s)
+	value, err := strconv.Atoi(s)
+	if err != nil {
+		panic("Invalid Document Value format")
+	}
 	return value
 }
 
