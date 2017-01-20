@@ -10,10 +10,8 @@ import (
 const (
 	// Max multiplier for module 11
 	maxModule11 = 9
-	
 	// min multiplier for module 11
 	minModule11 = 2
-	
 )
 
 // Defines a document type,
@@ -26,6 +24,7 @@ const (
 // @ValueTax taxa do boleto
 // @ValueDiscount abatimento/desconto
 // @ValueForfeit juros/multa
+// @OurNumber Nosso numero
 type Document struct {
 	Id 		int
 	Date		time.Time
@@ -34,6 +33,7 @@ type Document struct {
 	ValueTax 	float64
 	ValueDiscount	float64
 	ValueForfeit	float64
+	OurNumber	int
 	FebrabanType	string
 	Instructions 	[6]string
 	Payer		Payer
@@ -44,11 +44,11 @@ type Document struct {
 func dateDueFactor(dateDue time.Time) int {
 	var dateDueFixed = time.Date(1997, 10, 07, 0, 0, 0, 0, time.UTC)
 	dif := dateDue.Sub(dateDueFixed);
-	dif = int(dif.Hours()/24);
-	if dif <= 0 {
-		panic("Document DateDue must be in the future")
+	factor := int((dif.Hours()/24));
+	if factor <= 0 {
+		panic("Document.DateDue must be in the future")
 	}
-	return dif
+	return factor
 }
 
 // formatValue format the Document Value,
@@ -60,7 +60,7 @@ func formatValue(v float64) int {
 	
 	value, err := strconv.Atoi(s)
 	if err != nil {
-		panic("Invalid Document Value format")
+		panic("Invalid Document.Value format")
 	}
 	return value
 }

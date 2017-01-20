@@ -18,7 +18,7 @@ func BilletBB() {
 		Contrato: 12312351,
 		Carteira: 15,
 		Convenio: 1234,
-		FormatacaoConvenio: 1,
+		FormatacaoConvenio: 4,
 		FormatacaoNossoNumero: 1,
 		VariacaoCarteira: 6,
 		Company: Company{
@@ -37,6 +37,7 @@ func BilletBB() {
 		ValueTax: 1.00,
 		ValueDiscount: 0.00,
 		ValueForfeit: 199.99,
+		OurNumber: 123,
 		FebrabanType: "md",
 		Date: time.Now(),
 		DateDue: time.Now().AddDate(0, 0, 4),
