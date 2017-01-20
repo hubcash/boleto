@@ -1,5 +1,7 @@
 package goboleto
 
+import "strconv"
+
 // BB - Banco do Brasil
 // Source: (http://www.bb.com.br/docs/pub/emp/mpe/espeboletobb.pdf)
 type BB struct {
@@ -30,7 +32,33 @@ func (b BB) Barcode(d Document) BarcodeNumber {
 		DateDueFactor:  dateDueFactor(d.DateDue),
 		Value: formatValue(d.Value),
 	}
-	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+
+	// Complete the OurNumber digits, by adding convenio rules according to the bank
+	convenioSize := len(strconv.Itoa(b.Convenio))
+	if b.FormatacaoConvenio == 4 && convenioSize == 4 {
+		// For Convenio size 4: CCCCNNNNNNN-X
+		// C = Convenio number int(4)
+		// N = OurNumber int(7)
+		// X = DV, calculated by module11 int(1)
+		// TODO, bank numbers according to the format above
+		
+	} else if b.FormatacaoConvenio == 6 && convenioSize == 6 {
+		// For Convenio size 6: CCCCCCNNNNN-X
+		// C = Convenio number int(6)
+		// N = OurNumber int(5)
+		// X = DV, calculated by module11 int(1)
+		// TODO, bank numbers according to the format above
+		
+	} else if b.FormatacaoConvenio == 7 && convenioSize == 7 {
+		// For Convenio size 7: CCCCCCCNNNNNNNNNN
+		// C = Convenio number int(7)
+		// N = OurNumber int(10)
+		// TODO, bank numbers according to the format above
+		
+	} else {
+		panic("Invalid Bank.FormatacaoConvenio and Bank.Convenio")
+	}
+	
 	return n
 }
 
