@@ -38,7 +38,7 @@ type BarcodeNumber struct {
 	DateDueFactor 	int
 	// Valor formatado int(10)
 	Value 		int
-	// Campo livre, numeros do banco com nosso numero string(24)
+	// Campo livre, numeros do banco com nosso numero string(25)
 	BankNumbers	string
 	// Digito verificador do codigo de barras int(1)
 	dv 		int
