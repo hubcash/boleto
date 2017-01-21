@@ -15,6 +15,8 @@ const (
 	barcodeNumberMinSize = 19
 	// The max size of a barcode
 	barcodeNumberMaxSize = 44
+	// BarcodeNumber.BankNumbers size
+	bankNumbersSize = 25
 )
 
 // Barcode is defined as an interface,
@@ -24,7 +26,8 @@ const (
 type Barcode interface {
 	Image() 	base64.Encoding
 	Digitable() 	string
-	Dv()
+	verification()
+	toString() 	string
 }
 
 // Defines a barcode number type,
@@ -38,18 +41,10 @@ type BarcodeNumber struct {
 	DateDueFactor 	int
 	// Valor formatado int(10)
 	Value 		int
-	// Campo livre, numeros do banco com nosso numero string(24)
+	// Campo livre, numeros do banco com nosso numero string(25)
 	BankNumbers	string
 	// Digito verificador do codigo de barras int(1)
-	dv 		int
-}
-
-// Dv returns the BarcodeNumber verification number using module11
-func (n *BarcodeNumber) Dv() {
-	if n.dv != 0 {
-		panic("BarcodeNumber verification number already created")
-	}
-	n.dv = module11(n.toString())
+	Dv 		int
 }
 
 // Image return a image/base64, using a BarcodeNumber
@@ -75,7 +70,7 @@ func (n BarcodeNumber) Image() base64.Encoding {
 // X = DV, using module10
 //
 // Field 4: X
-// X = DV, BarcodeNumber.dv
+// X = DV, BarcodeNumber.Dv
 //
 // Field 5: UUUUVVVVVVVVVV
 // U = Due date factor
@@ -87,15 +82,21 @@ func (n BarcodeNumber) Digitable() string {
 	return "AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV"
 }
 
+// verification returns the BarcodeNumber verification number using module11
+func (n *BarcodeNumber) verification() {
+	s := n.toString()
+	n.Dv = module11(s)
+}
+
 // toString takes numbers of the barcode, and converts to a string,
 // including pad numbers and left zeros
 func (n *BarcodeNumber) toString() string {
 	var s = fmt.Sprintf("%0"+strconv.Itoa(bankMinSize)+"d", n.BankId)
-	s = s + strconv.Itoa(n.CurrencyId)
-	s = s + strconv.Itoa(n.dv)
-	s = s + strconv.Itoa(n.DateDueFactor)
-	s = s + fmt.Sprintf("%0"+strconv.Itoa(valueMinSize)+"d", n.Value)
-	s = s + n.BankNumbers
+	s += strconv.Itoa(n.CurrencyId)
+	s += strconv.Itoa(n.Dv)
+	s += strconv.Itoa(n.DateDueFactor)
+	s += fmt.Sprintf("%0"+strconv.Itoa(valueMinSize)+"d", n.Value)
+	s += n.BankNumbers
 	
 	if len(s) < barcodeNumberMinSize {
 		panic("There are missing values in Bank and Document structures")
@@ -103,6 +104,5 @@ func (n *BarcodeNumber) toString() string {
 	if len(s) > barcodeNumberMaxSize {
 		panic("There are remaining values in Bank and Document structures")
 	}
-	
 	return s
 }

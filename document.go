@@ -12,6 +12,8 @@ const (
 	maxModule11 = 9
 	// min multiplier for module 11
 	minModule11 = 2
+	// Document.OurNUmber size
+	ourNumberSize = 25
 )
 
 // Defines a document type,

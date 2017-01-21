@@ -13,13 +13,12 @@ func BilletBB() {
 
 	// static data, you should keep this configured in somewhere
 	var bank Bank = BB{
-		Account: 8888,
-		Agency: 99999,
+		Account: 88888888,
+		Agency: 4444,
 		Contrato: 12312351,
-		Carteira: 15,
-		Convenio: 1234,
-		FormatacaoConvenio: 4,
-		FormatacaoNossoNumero: 1,
+		Carteira: 55,
+		Convenio: 7654321,
+		FormatacaoConvenio: 7,
 		VariacaoCarteira: 6,
 		Company: Company{
 			Name: "Nome da empresa",
@@ -32,12 +31,12 @@ func BilletBB() {
 
 	// dynamic data, you should have this data coming from a database
 	var document = Document{
-		Id: 123,
+		Id: 1111,
 		Value: 999.99,
 		ValueTax: 1.00,
 		ValueDiscount: 0.00,
 		ValueForfeit: 199.99,
-		OurNumber: 123,
+		OurNumber: 111111111,
 		FebrabanType: "md",
 		Date: time.Now(),
 		DateDue: time.Now().AddDate(0, 0, 4),
@@ -58,7 +57,7 @@ func BilletBB() {
 	
 	// Optional, to use in your backend
 	var barcode = bank.Barcode(document)
-	fmt.Println(barcode.toString())
+	fmt.Println(barcode.Digitable())
 	//image := barcode.Image()
 	//digitable := barcode.Digitable()
 	

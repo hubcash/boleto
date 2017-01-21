@@ -17,9 +17,13 @@ type Bank interface {
 // @Aceite if the payer accepted the billet
 // @Currency the currency identifier
 // @CurrencyName the currency name
+// @AgencyMaxSize the agency size
+// @AccountMaxSize the account size
 type bankConfig struct {
 	Id 		int
 	Aceite 		string
 	Currency 	int
 	CurrencyName 	string
+	AgencyMaxSize	int
+	AccountMaxSize	int
 }
