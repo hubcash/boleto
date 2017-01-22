@@ -22,15 +22,20 @@ var configCaixa = bankConfig{
 	CurrencyName: "R$",
 }
 
-// Barcode Get the barcode
-func (b Caixa) Barcode(d Document) BarcodeNumber {
-	n := BarcodeNumber{
+// Barcode Get the Barcode, creating a BarcodeNumber
+func (b Caixa) Barcode(d Document) Barcode {
+	
+	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	
+	// Create a new Barcode
+	var n Barcode = &BarcodeNumber{
 		BankId: configCaixa.Id,
 		CurrencyId: configCaixa.Currency,
-		DateDueFactor: dateDueFactor(d.DateDue),
+		DateDueFactor:  dateDueFactor(d.DateDue),
 		Value: formatValue(d.Value),
+		//BankNumbers: fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
 	}
-	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	n.verification()
 	return n
 }
 

@@ -17,8 +17,8 @@ func BilletBB() {
 		Agency: 4444,
 		Contrato: 12312351,
 		Carteira: 55,
-		Convenio: 7654321,
-		FormatacaoConvenio: 7,
+		Convenio: 4321,
+		FormatacaoConvenio: 4,
 		VariacaoCarteira: 6,
 		Company: Company{
 			Name: "Nome da empresa",
@@ -36,7 +36,7 @@ func BilletBB() {
 		ValueTax: 1.00,
 		ValueDiscount: 0.00,
 		ValueForfeit: 199.99,
-		OurNumber: 111111111,
+		OurNumber: 111111,
 		FebrabanType: "md",
 		Date: time.Now(),
 		DateDue: time.Now().AddDate(0, 0, 4),
@@ -56,7 +56,8 @@ func BilletBB() {
 	//bank.Layout(document)
 	
 	// Optional, to use in your backend
-	var barcode = bank.Barcode(document)
+	var barcode Barcode = bank.Barcode(document)
+	fmt.Println(barcode.toString())
 	fmt.Println(barcode.Digitable())
 	//image := barcode.Image()
 	//digitable := barcode.Digitable()

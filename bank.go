@@ -6,7 +6,7 @@ package goboleto
 // @Transference Return the transference file (arquivo de remessa)
 // @Layout return a HTML template using a document
 type Bank interface {
-	Barcode(Document) BarcodeNumber
+	Barcode(Document) Barcode
 	Transference(Document)
 	Layout(Document)
 }

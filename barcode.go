@@ -26,8 +26,8 @@ const (
 type Barcode interface {
 	Image() 	base64.Encoding
 	Digitable() 	string
-	verification()
 	toString() 	string
+	verification()
 }
 
 // Defines a barcode number type,
@@ -54,7 +54,7 @@ func (n BarcodeNumber) Image() base64.Encoding {
 }
 
 // Digitable mount the barcode digitable number,
-// taking all fields together:
+// taking all BarcodeNumber fields together:
 // Field 1: AAABC.CCCCX
 // A = FEBRABAN Bank identifier
 // B = the currency identifier
@@ -78,8 +78,32 @@ func (n BarcodeNumber) Image() base64.Encoding {
 //
 // return AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV
 func (n BarcodeNumber) Digitable() string {
-	// TODO, return digits by using module10
-	return "AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV"
+	s := n.toString()
+
+	// Field 1
+	var f1 = fmt.Sprintf("%0"+strconv.Itoa(bankMinSize)+"d", n.BankId)
+	f1 += strconv.Itoa(n.CurrencyId)
+	f1 += string(s[19]) + "." + s[20:24]
+	f1 += strconv.Itoa(module10(f1, maxModule10))
+	
+	// Field 2
+	var f2 = s[24:29] + "." + s[29:34]
+	f2 += strconv.Itoa(module10(f2, minModule10))
+	
+	// Field 3
+	var f3 = s[34:39] + "." + s[39:44]
+	f3 += strconv.Itoa(module10(f3, minModule10))
+	
+	// Field 5
+	var f4 = strconv.Itoa(n.Dv)
+	
+	// Field 5
+	var f5 = strconv.Itoa(n.DateDueFactor)
+	f5 += fmt.Sprintf("%0"+strconv.Itoa(valueMinSize)+"d", n.Value)
+	
+	// All fields together
+	d := f1 + " " + f2 + " " + f3 + " " + f4 + " " + f5
+	return d
 }
 
 // verification returns the BarcodeNumber verification number using module11
@@ -88,7 +112,7 @@ func (n *BarcodeNumber) verification() {
 	n.Dv = module11(s)
 }
 
-// toString takes numbers of the barcode, and converts to a string,
+// toString takes BarcodeNumber, and converts to a string,
 // including pad numbers and left zeros
 func (n *BarcodeNumber) toString() string {
 	var s = fmt.Sprintf("%0"+strconv.Itoa(bankMinSize)+"d", n.BankId)

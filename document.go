@@ -8,12 +8,14 @@ import (
 )
 
 const (
-	// Max multiplier for module 11
-	maxModule11 = 9
+	// min multiplier for module 10
+	minModule10 = 1
+	// Max multiplier for module 10
+	maxModule10 = 2
 	// min multiplier for module 11
 	minModule11 = 2
-	// Document.OurNUmber size
-	ourNumberSize = 25
+	// Max multiplier for module 11
+	maxModule11 = 9
 )
 
 // Defines a document type,
@@ -67,9 +69,51 @@ func formatValue(v float64) int {
 	return value
 }
 
-func module10(n *BarcodeNumber) int {
-	// TODO
-	return 1
+// module10 takes a number and returns his verifier digit (spect an string
+// because it may contain left zeros and pad numbers)
+// Each digit that makes the Barcode digitable number is multiplied by his multiplier weight,
+// the multipliers range from 2 to 1, from left to right
+// Multiplication results are summed and divided by ten
+func module10(s string, p int) int {
+	// initial multiplier weight, verify if range match
+	if p < minModule10 || p > maxModule10 {
+		p = maxModule10
+	}
+
+	// Create a slice with the numbers
+	total := 0
+	for _, r := range s {
+		c := string(r)
+		n, isDot := strconv.Atoi(c)
+		
+		// if the multiplier weight is lower then minimal
+		if p < minModule10 {
+			p = maxModule10
+		}
+		
+		// if the number could not be found, equals to "."
+		if isDot != nil {
+			p--
+			continue
+		}
+		
+		// Multiply all numbers using multiplier weight
+		m := n*p
+		
+		// If the multiplication result is higher then 9,
+		// the numbers must be summed between then,
+		// For example: m == 18, need to sum 1+8
+		if m > 9 {
+			// TODO
+			fmt.Println(m)
+		}
+		
+		total += m
+		p--
+		
+	}
+	
+	return 9
 }
 
 // module11 takes a number and returns his verifier digit (spect an string

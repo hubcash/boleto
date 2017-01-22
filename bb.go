@@ -29,16 +29,10 @@ var configBB = bankConfig{
 	AccountMaxSize: 8,
 }
 
-// Barcode Get the barcode
-func (b BB) Barcode(d Document) BarcodeNumber {
-	n := BarcodeNumber{
-		BankId: configBB.Id,
-		CurrencyId: configBB.Currency,
-		DateDueFactor:  dateDueFactor(d.DateDue),
-		Value: formatValue(d.Value),
-	}
+// Barcode Get the Barcode, creating a BarcodeNumber
+func (b BB) Barcode(d Document) Barcode {
 
-	// Complete the BarcodeNumber.BankNumbers digits, by adding convenio rules according to the bank
+	// Complete the BankNumbers digits, by adding convenio rules according to the bank
 	var bn string
 	convenioSize := len(strconv.Itoa(b.Convenio))
 	ourNumberSize := len(strconv.Itoa(d.OurNumber))
@@ -88,7 +82,14 @@ func (b BB) Barcode(d Document) BarcodeNumber {
 		panic("Invalid Bank.FormatacaoConvenio and Bank.Convenio")
 	}
 	
-	n.BankNumbers = fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn)
+	// Create a new Barcode
+	var n Barcode = &BarcodeNumber{
+		BankId: configBB.Id,
+		CurrencyId: configBB.Currency,
+		DateDueFactor:  dateDueFactor(d.DateDue),
+		Value: formatValue(d.Value),
+		BankNumbers: fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
+	}
 	n.verification()
 	return n
 }
