@@ -104,8 +104,18 @@ func module10(s string, p int) int {
 		// the numbers must be summed between then,
 		// For example: m == 18, need to sum 1+8
 		if m > 9 {
-			// TODO
-			fmt.Println(m)
+			// Convert to string and create a range
+			multipliers := strconv.Itoa(m)
+			numbers := []int{}
+			for _, number := range multipliers {
+				i, _ := strconv.Atoi(string(number))
+				numbers = append(numbers, i)
+			}
+			// Sum the slice of integers
+			m = 0
+			for _, number := range numbers {
+				m += number
+			}
 		}
 		
 		total += m
@@ -113,7 +123,12 @@ func module10(s string, p int) int {
 		
 	}
 	
-	return 9
+	// End by dividing
+	dv := total % 10
+	if dv >= 10 {
+		dv = 0
+	}
+	return dv
 }
 
 // module11 takes a number and returns his verifier digit (spect an string
