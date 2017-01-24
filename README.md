@@ -15,6 +15,8 @@ Gerador de boletos para diversos bancos usando Go.
 [Veja a documentação no GoDoc](https://godoc.org/github.com/kezzbr/goboleto)
 
 ## TODO
-* Gerar imagens dos codigos de barras;
 * Gerar layout dos boletos;
 * Gerar remessas dos boletos registrados;
+
+## Dependencies
+* [boombuler/barcode](github.com/boombuler/barcode)
