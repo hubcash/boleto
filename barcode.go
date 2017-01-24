@@ -49,7 +49,7 @@ type BarcodeNumber struct {
 	Dv 		int
 }
 
-// Image return a image/base64, using a BarcodeNumber
+// Image return a image.Image, using a BarcodeNumber
 func (n BarcodeNumber) Image() image.Image {
 	e, _ := twooffive.Encode(n.toString(), true)
 	img, _ := barcodeImage.Scale(e, 670, 70)
