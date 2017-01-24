@@ -3,6 +3,9 @@ package goboleto
 import (
 	"time"
 	"fmt"
+	"log"
+	"net/http"
+	"image/png"
 )
 
 func init() {
@@ -57,9 +60,16 @@ func BilletBB() {
 	
 	// Optional, to use in your backend
 	var barcode Barcode = bank.Barcode(document)
-	fmt.Println(barcode.toString())
-	fmt.Println(barcode.Digitable())
+	//fmt.Println(barcode.toString())
+	//fmt.Println(barcode.Digitable())
 	//image := barcode.Image()
 	//digitable := barcode.Digitable()
+	
+	http.HandleFunc("/barcode", func(w http.ResponseWriter, r *http.Request) {
+		img := png.Encode(w, barcode.Image())
+		fmt.Fprintf(w, "Hello, %q", img)
+	})
+	
+	log.Fatal(http.ListenAndServe("localhost:8181", nil))
 	
 }

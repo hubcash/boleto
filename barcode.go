@@ -1,9 +1,11 @@
 package goboleto
 
 import (
-	"encoding/base64"
+	"image"
 	"fmt"
 	"strconv"
+	"github.com/boombuler/barcode/twooffive"
+	barcodeImage "github.com/boombuler/barcode"
 )
 
 const (
@@ -21,10 +23,10 @@ const (
 
 // Barcode is defined as an interface,
 // then we force to implement these functions:
-// @Image Return a image/base64, using a BarcodeNumber
+// @Image Return a image, using a BarcodeNumber
 // @Digitable Get the barcode digitable, it may contain dots and spaces
 type Barcode interface {
-	Image() 	base64.Encoding
+	Image() 	image.Image
 	Digitable() 	string
 	toString() 	string
 	verification()
@@ -48,9 +50,10 @@ type BarcodeNumber struct {
 }
 
 // Image return a image/base64, using a BarcodeNumber
-func (n BarcodeNumber) Image() base64.Encoding {
-	// TODO
-	return base64.Encoding{}
+func (n BarcodeNumber) Image() image.Image {
+	e, _ := twooffive.Encode(n.toString(), true)
+	img, _ := barcodeImage.Scale(e, 670, 70)
+	return img
 }
 
 // Digitable mount the barcode digitable number,
