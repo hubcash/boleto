@@ -1,5 +1,10 @@
 package goboleto
 
+import (
+	"html/template"
+	"net/http"
+)
+
 // Itau
 // Source: (http://download.itau.com.br/bankline/cobranca_cnab240.pdf)
 type Itau struct {
@@ -45,6 +50,8 @@ func (b Itau) Transference(d Document) {
 }
 
 // Layout return a HTML template using a document
-func (b Itau) Layout(d Document) {
-	// TODO
+func (b Itau) Layout(w http.ResponseWriter, d Document) {
+	var barcode Barcode = b.Barcode(d)
+	layout, _ := template.ParseFiles("templates/itau.html")
+	layout.ExecuteTemplate(w, "itau", barcode)
 }

@@ -1,5 +1,7 @@
 package goboleto
 
+import "net/http"
+
 // Bank is defined as an interface,
 // then we force to implement these functions:
 // @Barcode Get the BarcodeNumber
@@ -8,7 +10,7 @@ package goboleto
 type Bank interface {
 	Barcode(Document) Barcode
 	Transference(Document)
-	Layout(Document)
+	Layout(http.ResponseWriter, Document)
 }
 
 // Defines a bank configuration type,

@@ -1,5 +1,10 @@
 package goboleto
 
+import (
+	"html/template"
+	"net/http"
+)
+
 // Santander
 // Source: (https://www.santander.com.br/document/wps/sl-tabela-de-tarifas-cobranca.pdf)
 type Santander struct {
@@ -45,6 +50,8 @@ func (b Santander) Transference(d Document) {
 }
 
 // Layout return a HTML template using a document
-func (b Santander) Layout(d Document) {
-	// TODO
+func (b Santander) Layout(w http.ResponseWriter, d Document) {
+	var barcode Barcode = b.Barcode(d)
+	layout, _ := template.ParseFiles("templates/santander.html")
+	layout.ExecuteTemplate(w, "santander", barcode)
 }

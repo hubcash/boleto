@@ -2,10 +2,8 @@ package goboleto
 
 import (
 	"time"
-	"fmt"
 	"log"
 	"net/http"
-	"image/png"
 )
 
 func init() {
@@ -54,22 +52,20 @@ func BilletBB() {
 		},
 	}
 	
-	
 	// Print the layout
-	//bank.Layout(document)
-	
-	// Optional, to use in your backend
-	var barcode Barcode = bank.Barcode(document)
-	//fmt.Println(barcode.toString())
-	//fmt.Println(barcode.Digitable())
-	//image := barcode.Image()
-	//digitable := barcode.Digitable()
-	
-	http.HandleFunc("/barcode", func(w http.ResponseWriter, r *http.Request) {
-		img := png.Encode(w, barcode.Image())
-		fmt.Fprintf(w, "Hello, %q", img)
+	http.HandleFunc("/bb", func(w http.ResponseWriter, r *http.Request) {
+		bank.Layout(w, document)
 	})
-	
 	log.Fatal(http.ListenAndServe("localhost:8181", nil))
+	
+	// Optional, to use in your backend,
+	// then you can save the barcode digitable number, or save the image separately
+	/*
+	var barcode Barcode = bank.Barcode(document)
+	fmt.Println(barcode.toString())
+	fmt.Println(barcode.Digitable())
+	image := barcode.Image()
+	digitable := barcode.Digitable()
+	*/
 	
 }

@@ -1,5 +1,10 @@
 package goboleto
 
+import (
+	"html/template"
+	"net/http"
+)
+
 // CEF - Caixa econômica federal
 // Source: (http://www.caixa.gov.br/Downloads/cobranca-caixa/ESP_COD_BARRAS_SIGCB_COBRANCA_CAIXA.pdf)
 type Caixa struct {
@@ -45,6 +50,8 @@ func (b Caixa) Transference(d Document) {
 }
 
 // Layout return a HTML template using a document
-func (b Caixa) Layout(d Document) {
-	// TODO
+func (b Caixa) Layout(w http.ResponseWriter, d Document) {
+	var barcode Barcode = b.Barcode(d)
+	layout, _ := template.ParseFiles("templates/caixa.html")
+	layout.ExecuteTemplate(w, "caixa", barcode)
 }

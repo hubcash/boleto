@@ -1,5 +1,10 @@
 package goboleto
 
+import (
+	"html/template"
+	"net/http"
+)
+
 // Bradesco
 // Source: (https://banco.bradesco/assets/pessoajuridica/pdf/4008-524-0121-08-layout-cobranca-versao-portuguesSS28785.pdf)
 type Bradesco struct {
@@ -45,6 +50,8 @@ func (b Bradesco) Transference(d Document) {
 }
 
 // Layout return a HTML template using a document
-func (b Bradesco) Layout(d Document) {
-	// TODO
+func (b Bradesco) Layout(w http.ResponseWriter, d Document) {
+	var barcode Barcode = b.Barcode(d)
+	layout, _ := template.ParseFiles("templates/bradesco.html")
+	layout.ExecuteTemplate(w, "bradesco", barcode)
 }

@@ -3,6 +3,8 @@ package goboleto
 import (
 	"strconv"
 	"fmt"
+	"html/template"
+	"net/http"
 )
 
 // BB - Banco do Brasil
@@ -100,6 +102,8 @@ func (b BB) Transference(d Document) {
 }
 
 // Layout return a HTML template using a document
-func (b BB) Layout(d Document) {
-	// TODO
+func (b BB) Layout(w http.ResponseWriter, d Document) {
+	var barcode Barcode = b.Barcode(d)
+	layout, _ := template.ParseFiles("templates/bb.html")
+	layout.ExecuteTemplate(w, "bb", barcode)
 }
