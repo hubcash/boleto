@@ -22,10 +22,10 @@ type Bank interface {
 // @AgencyMaxSize the agency size
 // @AccountMaxSize the account size
 type bankConfig struct {
-	Id 		int
-	Aceite 		string
-	Currency 	int
-	CurrencyName 	string
-	AgencyMaxSize	int
-	AccountMaxSize	int
+	Id             int
+	Aceite         string
+	Currency       int
+	CurrencyName   string
+	AgencyMaxSize  int
+	AccountMaxSize int
 }

@@ -1,11 +1,11 @@
 package goboleto
 
 import (
-	"image"
 	"fmt"
-	"strconv"
-	"github.com/boombuler/barcode/twooffive"
 	barcodeImage "github.com/boombuler/barcode"
+	"github.com/boombuler/barcode/twooffive"
+	"image"
+	"strconv"
 )
 
 const (
@@ -26,9 +26,9 @@ const (
 // @Image Return a image, using a BarcodeNumber
 // @Digitable Get the barcode digitable, it may contain dots and spaces
 type Barcode interface {
-	Image() 	image.Image
-	Digitable() 	string
-	toString() 	string
+	Image() image.Image
+	Digitable() string
+	toString() string
 	verification()
 }
 
@@ -36,17 +36,17 @@ type Barcode interface {
 // holds numbers of the barcode
 type BarcodeNumber struct {
 	// Codigo do banco int(3)
-	BankId 		int
+	BankId int
 	// Codigo da moeda int(1)
-	CurrencyId 	int
+	CurrencyId int
 	// Fator de vencimento int(4)
-	DateDueFactor 	int
+	DateDueFactor int
 	// Valor formatado int(10)
-	Value 		int
+	Value int
 	// Campo livre, numeros do banco com nosso numero string(25)
-	BankNumbers	string
+	BankNumbers string
 	// Digito verificador do codigo de barras int(1)
-	Dv 		int
+	Dv int
 }
 
 // Image return a image.Image, using a BarcodeNumber
@@ -88,22 +88,22 @@ func (n BarcodeNumber) Digitable() string {
 	f1 += strconv.Itoa(n.CurrencyId)
 	f1 += string(s[19]) + "." + s[20:24]
 	f1 += strconv.Itoa(module10(f1, maxModule10))
-	
+
 	// Field 2
 	var f2 = s[24:29] + "." + s[29:34]
 	f2 += strconv.Itoa(module10(f2, minModule10))
-	
+
 	// Field 3
 	var f3 = s[34:39] + "." + s[39:44]
 	f3 += strconv.Itoa(module10(f3, minModule10))
-	
+
 	// Field 5
 	var f4 = strconv.Itoa(n.Dv)
-	
+
 	// Field 5
 	var f5 = strconv.Itoa(n.DateDueFactor)
 	f5 += fmt.Sprintf("%0"+strconv.Itoa(valueMinSize)+"d", n.Value)
-	
+
 	// All fields together
 	d := f1 + " " + f2 + " " + f3 + " " + f4 + " " + f5
 	return d
@@ -124,7 +124,7 @@ func (n *BarcodeNumber) toString() string {
 	s += strconv.Itoa(n.DateDueFactor)
 	s += fmt.Sprintf("%0"+strconv.Itoa(valueMinSize)+"d", n.Value)
 	s += n.BankNumbers
-	
+
 	if len(s) < barcodeNumberMinSize {
 		panic("There are missing values in Bank and Document structures")
 	}

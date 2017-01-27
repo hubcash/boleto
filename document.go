@@ -1,10 +1,10 @@
 package goboleto
 
 import (
-	"time"
-	"strings"
 	"fmt"
 	"strconv"
+	"strings"
+	"time"
 )
 
 const (
@@ -30,25 +30,25 @@ const (
 // @ValueForfeit juros/multa
 // @OurNumber Nosso numero
 type Document struct {
-	Id 		int
-	Date		time.Time
-	DateDue		time.Time
-	Value 		float64
-	ValueTax 	float64
-	ValueDiscount	float64
-	ValueForfeit	float64
-	OurNumber	int
-	FebrabanType	string
-	Instructions 	[6]string
-	Payer		Payer
+	Id            int
+	Date          time.Time
+	DateDue       time.Time
+	Value         float64
+	ValueTax      float64
+	ValueDiscount float64
+	ValueForfeit  float64
+	OurNumber     int
+	FebrabanType  string
+	Instructions  [6]string
+	Payer         Payer
 }
 
 // dateDueFactor use a DateDue type time.Time to return a int,
 // with is the quantity of days subsequents from 1997-10-07
 func dateDueFactor(dateDue time.Time) int {
 	var dateDueFixed = time.Date(1997, 10, 07, 0, 0, 0, 0, time.UTC)
-	dif := dateDue.Sub(dateDueFixed);
-	factor := int((dif.Hours()/24));
+	dif := dateDue.Sub(dateDueFixed)
+	factor := int(dif.Hours() / 24)
 	if factor <= 0 {
 		panic("Document.DateDue must be in the future")
 	}
@@ -61,7 +61,7 @@ func formatValue(v float64) int {
 	s := fmt.Sprint(v)
 	s = strings.Replace(s, ",", "", -1)
 	s = strings.Replace(s, ".", "", -1)
-	
+
 	value, err := strconv.Atoi(s)
 	if err != nil {
 		panic("Invalid Document.Value format")
@@ -85,21 +85,21 @@ func module10(s string, p int) int {
 	for _, r := range s {
 		c := string(r)
 		n, isDot := strconv.Atoi(c)
-		
+
 		// if the multiplier weight is lower then minimal
 		if p < minModule10 {
 			p = maxModule10
 		}
-		
+
 		// if the number could not be found, equals to "."
 		if isDot != nil {
 			p--
 			continue
 		}
-		
+
 		// Multiply all numbers using multiplier weight
-		m := n*p
-		
+		m := n * p
+
 		// If the multiplication result is higher then 9,
 		// the numbers must be summed between then,
 		// For example: m == 18, need to sum 1+8
@@ -117,12 +117,12 @@ func module10(s string, p int) int {
 				m += number
 			}
 		}
-		
+
 		total += m
 		p--
-		
+
 	}
-	
+
 	// End by dividing
 	dv := total % 10
 	if dv >= 10 {
@@ -145,7 +145,7 @@ func module11(s string) int {
 		numbers[i] = n
 	}
 	numbersLen := len(numbers)
-	
+
 	// initial multiplier weight
 	var p = maxModule11
 	if numbersLen > 11 {
@@ -155,10 +155,10 @@ func module11(s string) int {
 	// Inverse the numbers creating for loop
 	// Multiply all numbers using multiplier weight
 	total := 0
-	for i := len(numbers)-1; i >= 0; i-- {
+	for i := len(numbers) - 1; i >= 0; i-- {
 		n := numbers[i]
-		total += (n*p)
-		
+		total += n * p
+
 		// If the numbers length is higher than 11,
 		// we need to inverse the min and max
 		if numbersLen > 11 {
@@ -169,15 +169,15 @@ func module11(s string) int {
 			}
 			continue
 		}
-		
+
 		p--
 		// if the multiplier weight is lower then minimal
 		if p < minModule11 {
 			p = maxModule11
 		}
-		
+
 	}
-	
+
 	// If the numbers length is higher than 11,
 	// we need to divide also by 11
 	if numbersLen > 11 {
@@ -190,7 +190,7 @@ func module11(s string) int {
 		}
 		return dv
 	}
-	
+
 	// End by dividing
 	return total % 11
 }

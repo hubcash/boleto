@@ -1,33 +1,33 @@
 package goboleto
 
 import (
-	"strconv"
 	"fmt"
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 // BB - Banco do Brasil
 // Source: (http://www.bb.com.br/docs/pub/emp/mpe/espeboletobb.pdf)
 type BB struct {
-	Agency 			int
-	Account			int
-	Convenio		int
-	Contrato		int
-	Carteira		int
-	VariacaoCarteira	int
-	FormatacaoConvenio	int
-	FormatacaoNossoNumero	int
-	Company			Company
+	Agency                int
+	Account               int
+	Convenio              int
+	Contrato              int
+	Carteira              int
+	VariacaoCarteira      int
+	FormatacaoConvenio    int
+	FormatacaoNossoNumero int
+	Company               Company
 }
 
 // configBB is a global for this bank configs
 var configBB = bankConfig{
-	Id: 001,
-	Aceite: "N",
-	Currency: 9,
-	CurrencyName: "R$",
-	AgencyMaxSize: 4,
+	Id:             001,
+	Aceite:         "N",
+	Currency:       9,
+	CurrencyName:   "R$",
+	AgencyMaxSize:  4,
 	AccountMaxSize: 8,
 }
 
@@ -46,13 +46,13 @@ func (b BB) Barcode(d Document) Barcode {
 		if ourNumberSize > 7 {
 			panic("Document.OurNumber max of 7 digits")
 		}
-		
+
 		bn += strconv.Itoa(b.Convenio)
 		bn += fmt.Sprintf("%07d", d.OurNumber)
 		bn += fmt.Sprintf("%0"+strconv.Itoa(configBB.AgencyMaxSize)+"d", b.Agency)
 		bn += fmt.Sprintf("%0"+strconv.Itoa(configBB.AccountMaxSize)+"d", b.Account)
 		bn += strconv.Itoa(b.Carteira)
-		
+
 	} else if b.FormatacaoConvenio == 6 && convenioSize == 6 {
 		// For Convenio size 6: CCCCCCNNNNN-X
 		// C = Convenio number int(6)
@@ -61,13 +61,13 @@ func (b BB) Barcode(d Document) Barcode {
 		if ourNumberSize > 5 {
 			panic("Document.OurNumber max of 5 digits")
 		}
-		
+
 		bn += strconv.Itoa(b.Convenio)
 		bn += fmt.Sprintf("%05d", d.OurNumber)
 		bn += fmt.Sprintf("%0"+strconv.Itoa(configBB.AgencyMaxSize)+"d", b.Agency)
 		bn += fmt.Sprintf("%0"+strconv.Itoa(configBB.AccountMaxSize)+"d", b.Account)
 		bn += strconv.Itoa(b.Carteira)
-		
+
 	} else if b.FormatacaoConvenio == 7 && convenioSize == 7 {
 		// For Convenio size 7: CCCCCCCNNNNNNNNNN
 		// C = Convenio number int(7)
@@ -75,22 +75,22 @@ func (b BB) Barcode(d Document) Barcode {
 		if ourNumberSize > 9 {
 			panic("Document.OurNumber max of 9 digits")
 		}
-		
+
 		bn += fmt.Sprintf("%013d", b.Convenio)
 		bn += fmt.Sprintf("%09d", d.OurNumber)
 		bn += strconv.Itoa(b.Carteira)
-		
+
 	} else {
 		panic("Invalid Bank.FormatacaoConvenio and Bank.Convenio")
 	}
-	
+
 	// Create a new Barcode
 	var n Barcode = &BarcodeNumber{
-		BankId: configBB.Id,
-		CurrencyId: configBB.Currency,
-		DateDueFactor:  dateDueFactor(d.DateDue),
-		Value: formatValue(d.Value),
-		BankNumbers: fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
+		BankId:        configBB.Id,
+		CurrencyId:    configBB.Currency,
+		DateDueFactor: dateDueFactor(d.DateDue),
+		Value:         formatValue(d.Value),
+		BankNumbers:   fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
 	}
 	n.verification()
 	return n
