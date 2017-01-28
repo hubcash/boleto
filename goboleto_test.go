@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"fmt"
 )
 
 func init() {
@@ -52,20 +53,16 @@ func BilletBB() {
 		},
 	}
 
+	// Optional, to use in your backend,
+	// then you can save the barcode digitable number, or save the image separately
+	var barcode Barcode = bank.Barcode(document)
+	fmt.Println(barcode.toString())
+	fmt.Println(barcode.Digitable())
+
 	// Print the layout
 	http.HandleFunc("/bb", func(w http.ResponseWriter, r *http.Request) {
 		bank.Layout(w, document)
 	})
 	log.Fatal(http.ListenAndServe("localhost:8181", nil))
-
-	// Optional, to use in your backend,
-	// then you can save the barcode digitable number, or save the image separately
-	/*
-		var barcode Barcode = bank.Barcode(document)
-		fmt.Println(barcode.toString())
-		fmt.Println(barcode.Digitable())
-		image := barcode.Image()
-		digitable := barcode.Digitable()
-	*/
 
 }

@@ -53,5 +53,9 @@ func (b Santander) Transference(d Document) {
 func (b Santander) Layout(w http.ResponseWriter, d Document) {
 	var barcode Barcode = b.Barcode(d)
 	layout, _ := template.ParseFiles("templates/santander.html")
-	layout.ExecuteTemplate(w, "santander", barcode)
+	layout.ExecuteTemplate(w, "santander", map[string]interface{}{
+		"Barcode": barcode,
+		"Document": d,
+		"Bank": b,
+	})
 }
