@@ -1,4 +1,4 @@
-package goboleto
+package boleto
 
 import (
 	"log"

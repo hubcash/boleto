@@ -1,4 +1,4 @@
-package goboleto
+package boleto
 
 // Defines a payer type, holds the data of,
 // the person who carrier the billet

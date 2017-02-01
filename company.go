@@ -1,4 +1,4 @@
-package goboleto
+package boleto
 
 // Defines a company type,
 // holds the data of the emissor

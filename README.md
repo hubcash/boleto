@@ -1,4 +1,4 @@
-# goboleto
+# boleto
 [![Coverage Status](https://img.shields.io/badge/coverage-50%25-brightgreen.svg)]()
 
 Gerador de boletos para diversos bancos usando Go.
