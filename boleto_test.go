@@ -19,7 +19,6 @@ func BilletBB() {
 		Agency:             4444,
 		Carteira:           55,
 		Convenio:           4321,
-		FormatacaoConvenio: 4,
 		Company: Company{
 			Name:      "Nome da empresa",
 			LegalName: "Razao social",

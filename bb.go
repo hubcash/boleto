@@ -14,7 +14,6 @@ type BB struct {
 	Account               int
 	Convenio              int
 	Carteira              int
-	FormatacaoConvenio    int
 	Company               Company
 }
 
@@ -35,7 +34,7 @@ func (b BB) Barcode(d Document) Barcode {
 	var bn string
 	convenioSize := len(strconv.Itoa(b.Convenio))
 	ourNumberSize := len(strconv.Itoa(d.OurNumber))
-	if b.FormatacaoConvenio == 4 && convenioSize == 4 {
+	if convenioSize == 4 {
 		// For Convenio size 4: CCCCNNNNNNN-X
 		// C = Convenio number int(4)
 		// N = OurNumber int(7)
@@ -50,7 +49,7 @@ func (b BB) Barcode(d Document) Barcode {
 		bn += fmt.Sprintf("%0"+strconv.Itoa(configBB.AccountMaxSize)+"d", b.Account)
 		bn += strconv.Itoa(b.Carteira)
 
-	} else if b.FormatacaoConvenio == 6 && convenioSize == 6 {
+	} else if convenioSize == 6 {
 		// For Convenio size 6: CCCCCCNNNNN-X
 		// C = Convenio number int(6)
 		// N = OurNumber int(5)
@@ -65,7 +64,7 @@ func (b BB) Barcode(d Document) Barcode {
 		bn += fmt.Sprintf("%0"+strconv.Itoa(configBB.AccountMaxSize)+"d", b.Account)
 		bn += strconv.Itoa(b.Carteira)
 
-	} else if b.FormatacaoConvenio == 7 && convenioSize == 7 {
+	} else if convenioSize == 7 {
 		// For Convenio size 7: CCCCCCCNNNNNNNNNN
 		// C = Convenio number int(7)
 		// N = OurNumber int(9)
@@ -78,7 +77,7 @@ func (b BB) Barcode(d Document) Barcode {
 		bn += strconv.Itoa(b.Carteira)
 
 	} else {
-		panic("Invalid Bank.FormatacaoConvenio and Bank.Convenio")
+		panic("Invalid Bank.Convenio")
 	}
 
 	// Create a new Barcode
