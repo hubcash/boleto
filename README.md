@@ -6,7 +6,7 @@ Gerador de boletos para diversos bancos usando Go.
 [![golang.sh-600x600.jpg](https://s27.postimg.org/coqxnki9f/golang_sh_600x600.jpg)](https://postimg.org/image/yb5y4lgtr/)
 
 ## Features
-* Bancos suportados: Banco do Brasil, Bradescon, Caixa, Itau e Santander;
+* Bancos suportados: Banco do Brasil, Bradesco, Caixa, Itau e Santander;
 * Gera linha digitavel e imagem com código de barras;
 * Apenas boletos registrados, conforme novas regras FEBRABAN;
 
