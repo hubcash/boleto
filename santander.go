@@ -3,6 +3,8 @@ package boleto
 import (
 	"html/template"
 	"net/http"
+	"fmt"
+	"strconv"
 )
 
 // Santander
@@ -10,12 +12,8 @@ import (
 type Santander struct {
 	Agency                int
 	Account               int
-	Convenio              int
-	Contrato              int
 	Carteira              int
-	VariacaoCarteira      int
-	FormatacaoConvenio    int
-	FormatacaoNossoNumero int
+	IOS                   int
 	Company               Company
 }
 
@@ -30,7 +28,13 @@ var configSantander = bankConfig{
 // Barcode Get the Barcode, creating a BarcodeNumber
 func (b Santander) Barcode(d Document) Barcode {
 
-	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	// Complete the BankNumbers digits
+	var bn string
+	bn += "9"
+	bn += fmt.Sprintf("%0"+strconv.Itoa(configSantander.AccountMaxSize)+"d", b.Account)
+	bn += fmt.Sprintf("%013d", d.OurNumber)
+	bn += strconv.Itoa(b.IOS)
+	bn += strconv.Itoa(b.Carteira)
 
 	// Create a new Barcode
 	var n Barcode = &BarcodeNumber{
@@ -38,7 +42,7 @@ func (b Santander) Barcode(d Document) Barcode {
 		CurrencyId:    configSantander.Currency,
 		DateDueFactor: dateDueFactor(d.DateDue),
 		Value:         formatValue(d.Value),
-		//BankNumbers: fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
+		BankNumbers:   fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
 	}
 	n.verification()
 	return n

@@ -3,6 +3,8 @@ package boleto
 import (
 	"html/template"
 	"net/http"
+	"fmt"
+	"strconv"
 )
 
 // Bradesco
@@ -10,12 +12,7 @@ import (
 type Bradesco struct {
 	Agency                int
 	Account               int
-	Convenio              int
-	Contrato              int
 	Carteira              int
-	VariacaoCarteira      int
-	FormatacaoConvenio    int
-	FormatacaoNossoNumero int
 	Company               Company
 }
 
@@ -30,7 +27,12 @@ var configBradesco = bankConfig{
 // Barcode Get the Barcode, creating a BarcodeNumber
 func (b Bradesco) Barcode(d Document) Barcode {
 
-	// TODO, bank numbers (nosso numero, de acordo com a carteira e convenio)
+	// Complete the BankNumbers digits
+	var bn string
+	bn += fmt.Sprintf("%0"+strconv.Itoa(configBradesco.AgencyMaxSize)+"d", b.Agency)
+	bn += strconv.Itoa(b.Carteira)
+	bn += fmt.Sprintf("%011d", d.OurNumber)
+	bn += fmt.Sprintf("%0"+strconv.Itoa(configBradesco.AccountMaxSize)+"d", b.Account)
 
 	// Create a new Barcode
 	var n Barcode = &BarcodeNumber{
@@ -38,7 +40,7 @@ func (b Bradesco) Barcode(d Document) Barcode {
 		CurrencyId:    configBradesco.Currency,
 		DateDueFactor: dateDueFactor(d.DateDue),
 		Value:         formatValue(d.Value),
-		//BankNumbers: fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
+		BankNumbers:   fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
 	}
 	n.verification()
 	return n

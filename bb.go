@@ -13,11 +13,8 @@ type BB struct {
 	Agency                int
 	Account               int
 	Convenio              int
-	Contrato              int
 	Carteira              int
-	VariacaoCarteira      int
 	FormatacaoConvenio    int
-	FormatacaoNossoNumero int
 	Company               Company
 }
 

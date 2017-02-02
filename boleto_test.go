@@ -17,11 +17,9 @@ func BilletBB() {
 	var bank Bank = BB{
 		Account:            88888888,
 		Agency:             4444,
-		Contrato:           12312351,
 		Carteira:           55,
 		Convenio:           4321,
 		FormatacaoConvenio: 4,
-		VariacaoCarteira:   6,
 		Company: Company{
 			Name:      "Nome da empresa",
 			LegalName: "Razao social",

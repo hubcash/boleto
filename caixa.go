@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// CEF - Caixa econômica federal
+// CEF - Caixa econômica federal - Modelo SIGCB
 // Source: (http://www.caixa.gov.br/Downloads/cobranca-caixa/ESP_COD_BARRAS_SIGCB_COBRANCA_CAIXA.pdf)
 type Caixa struct {
 	Agency                int
