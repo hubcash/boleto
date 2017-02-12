@@ -22,6 +22,7 @@ var configCaixa = bankConfig{
 	Aceite:       "N",
 	Currency:     9,
 	CurrencyName: "R$",
+	AccountMaxSize: 6,
 }
 
 // Barcode Get the Barcode, creating a BarcodeNumber

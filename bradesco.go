@@ -22,6 +22,8 @@ var configBradesco = bankConfig{
 	Aceite:       "N",
 	Currency:     9,
 	CurrencyName: "R$",
+	AgencyMaxSize: 4,
+	AccountMaxSize: 7,
 }
 
 // Barcode Get the Barcode, creating a BarcodeNumber

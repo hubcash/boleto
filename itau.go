@@ -23,6 +23,8 @@ var configItau = bankConfig{
 	Aceite:       "N",
 	Currency:     9,
 	CurrencyName: "R$",
+	AgencyMaxSize: 4,
+	AccountMaxSize: 5,
 }
 
 // Barcode Get the Barcode, creating a BarcodeNumber
