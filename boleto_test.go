@@ -1,8 +1,6 @@
 package boleto
 
 import (
-	"log"
-	"net/http"
 	"time"
 	"fmt"
 )
@@ -55,11 +53,5 @@ func BilletBB() {
 	var barcode Barcode = bank.Barcode(document)
 	fmt.Println(barcode.toString())
 	fmt.Println(barcode.Digitable())
-
-	// Print the layout
-	http.HandleFunc("/bb", func(w http.ResponseWriter, r *http.Request) {
-		bank.Layout(w, document)
-	})
-	log.Fatal(http.ListenAndServe("localhost:8181", nil))
 
 }

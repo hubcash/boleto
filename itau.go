@@ -85,8 +85,8 @@ func (b Itau) Barcode(d Document) Barcode {
 		if b.Carteira == 126||b.Carteira == 131||b.Carteira == 146||
 		   b.Carteira == 150||b.Carteira == 168 {
 			// module10 with bank agency, account, carteira, and OurNumber
-			m := strconv.Itoa(b.Agency)
-			m += strconv.Itoa(b.Account)
+			m := fmt.Sprintf("%0"+strconv.Itoa(configItau.AgencyMaxSize)+"d", b.Agency)
+			m += fmt.Sprintf("%0"+strconv.Itoa(configItau.AccountMaxSize)+"d", b.Account)
 			m += strconv.Itoa(b.Carteira)
 			m += strconv.Itoa(d.OurNumber)
 			codeModuleCarteira = module10(m, 2)
