@@ -1,5 +1,5 @@
 # boleto
-[![Coverage Status](https://img.shields.io/badge/coverage-55%25-brightgreen.svg)]()
+[![Coverage Status](https://img.shields.io/badge/coverage-70%25-brightgreen.svg)]()
 
 Gerador de boletos para diversos bancos usando Go.
 
@@ -12,7 +12,7 @@ Gerador de boletos para diversos bancos usando Go.
 
 ## Usage
 
-[Veja a documentação no GoDoc](https://godoc.org/github.com/kezzbr/boleto)
+[Veja a documentação no GoDoc](https://godoc.org/github.com/hubcash/boleto)
 
 ## TODO
 * Criar layout dos boletos;
