@@ -85,7 +85,7 @@ func (b BB) Barcode(d Document) Barcode {
 		BankId:        configBB.Id,
 		CurrencyId:    configBB.Currency,
 		DateDueFactor: dateDueFactor(d.DateDue),
-		Value:         formatValue(d.Value),
+		Value:         d.Value,
 		BankNumbers:   fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
 	}
 	n.verification()

@@ -29,10 +29,10 @@ func BilletBB() {
 	// dynamic data, you should have this data coming from a database
 	var document = Document{
 		Id:            1111,
-		Value:         999.99,
-		ValueTax:      1.00,
-		ValueDiscount: 0.00,
-		ValueForfeit:  199.99,
+		Value:         99999,
+		ValueTax:      100,
+		ValueDiscount: 0,
+		ValueForfeit:  19999,
 		OurNumber:     111111,
 		FebrabanType:  "md",
 		Date:          time.Now(),

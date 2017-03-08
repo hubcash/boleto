@@ -41,7 +41,7 @@ func (b Bradesco) Barcode(d Document) Barcode {
 		BankId:        configBradesco.Id,
 		CurrencyId:    configBradesco.Currency,
 		DateDueFactor: dateDueFactor(d.DateDue),
-		Value:         formatValue(d.Value),
+		Value:         d.Value,
 		BankNumbers:   fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
 	}
 	n.verification()

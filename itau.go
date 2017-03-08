@@ -117,7 +117,7 @@ func (b Itau) Barcode(d Document) Barcode {
 		BankId:        configItau.Id,
 		CurrencyId:    configItau.Currency,
 		DateDueFactor: dateDueFactor(d.DateDue),
-		Value:         formatValue(d.Value),
+		Value:         d.Value,
 		BankNumbers:   fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
 	}
 	n.verification()

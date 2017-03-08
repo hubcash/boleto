@@ -1,9 +1,7 @@
 package boleto
 
 import (
-	"fmt"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -33,10 +31,10 @@ type Document struct {
 	Id            int
 	Date          time.Time
 	DateDue       time.Time
-	Value         float64
-	ValueTax      float64
-	ValueDiscount float64
-	ValueForfeit  float64
+	Value         int
+	ValueTax      int
+	ValueDiscount int
+	ValueForfeit  int
 	OurNumber     int
 	FebrabanType  string
 	Instructions  [6]string
@@ -53,20 +51,6 @@ func dateDueFactor(dateDue time.Time) int {
 		panic("Document.DateDue must be in the future")
 	}
 	return factor
-}
-
-// formatValue format the Document Value,
-// in order to replace dots and commas
-func formatValue(v float64) int {
-	s := fmt.Sprint(v)
-	s = strings.Replace(s, ",", "", -1)
-	s = strings.Replace(s, ".", "", -1)
-
-	value, err := strconv.Atoi(s)
-	if err != nil {
-		panic("Invalid Document.Value format")
-	}
-	return value
 }
 
 // module10 takes a number and returns his verifier digit (spect an string
