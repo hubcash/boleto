@@ -1,7 +1,8 @@
 # boleto
 
 Billet generator for several Brazilian Banks using Go.
-[Veja a documentação no GoDoc](https://godoc.org/github.com/hubcash/boleto)
+
+[GoDoc](https://godoc.org/github.com/hubcash/boleto)
 
 ### Features
 * Supported banks: Banco do Brasil, Bradesco, Caixa, Itau and Santander;
