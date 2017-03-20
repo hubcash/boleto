@@ -1,17 +1,17 @@
 # boleto
 
-Gerador de boletos para diversos bancos usando Go.
-
-## Features
-* Bancos suportados: Banco do Brasil, Bradesco, Caixa, Itau e Santander;
-* Gera linha digitavel e imagem com código de barras;
-* Apenas boletos registrados, conforme novas regras FEBRABAN;
-
+Billet generator for several Brazilian Banks using Go.
 [Veja a documentação no GoDoc](https://godoc.org/github.com/hubcash/boleto)
 
-## TODO
-* Criar layout dos boletos;
-* Gerar remessas dos boletos registrados;
+### Features
+* Supported banks: Banco do Brasil, Bradesco, Caixa, Itau and Santander;
+* Generates digitable number and barcode image;
+* FEBRABAN rules supported;
 
-## Dependencies
+
+### TODO
+* Create templates;
+* Create transmissions file;
+
+### Dependencies
 * [boombuler/barcode](github.com/boombuler/barcode)
